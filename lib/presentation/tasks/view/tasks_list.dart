@@ -23,6 +23,7 @@ class TasksList extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return _taskBody(context, state.tasks[index]);
                   },
+                  itemCount: state.tasks.length,
                 );
 
               default:

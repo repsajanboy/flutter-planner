@@ -15,7 +15,7 @@ class ApiClient {
       const postTaskUrl = "$baseUrl/tasks.json";
       final postTaskResponse =
           await _dio.post(postTaskUrl, data: postTask.toJson());
-      return postTaskResponse;
+      return json.decode(postTaskResponse.data);
     } on DioError catch (e) {
       final err = json.decode(e.response.toString());
       print(err);
@@ -27,7 +27,8 @@ class ApiClient {
     try {
       const tasksUrl = "$baseUrl/tasks.json";
       final tasksResponse = await _dio.get(tasksUrl);
-      return tasksResponse;
+      final toEncode = json.encode(tasksResponse.data);
+      return json.decode(toEncode);
     } on DioError catch (e) {
       final err = json.decode(e.response.toString());
       print(err);

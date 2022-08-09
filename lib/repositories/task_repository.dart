@@ -16,16 +16,16 @@ class TaskRepository {
 
   Future<List<Task>> fetchTasks() async {
     final result = await apiClient.fetchTasks();
-    Map<String, dynamic> extractedData = json.decode(result);
+    final extractedData = result as Map<String, dynamic>;
     final List<Task> fetchTasks = [];
     extractedData.forEach((key, value) {
       fetchTasks.add(Task(
         id: key,
-        title: value['title'],
-        taskDate: value['taskDate'],
-        startTime: value['startTime'],
-        endTime: value['endTime'],
-        isComplete: value['isComplete']
+        title: value['title'] as String,
+        taskDate: DateTime.parse(value['taskDate'] as String) ,
+        startTime: DateTime.parse(value['startTime'] as String),
+        endTime: DateTime.parse(value['endTime'] as String),
+        isComplete: value['isComplete'] as bool
       ));
      });
      return fetchTasks;

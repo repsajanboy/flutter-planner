@@ -22,16 +22,11 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     try {
       if (state.status == TaskStatus.initial) {
         final tasks = await taskRepository.fetchTasks();
-        state.copyWith(
+        emit(state.copyWith(
           status: TaskStatus.success,
           tasks: tasks,
-        );
+        ));
       }
-      final tasks = await taskRepository.fetchTasks();
-      state.copyWith(
-        status: TaskStatus.success,
-        tasks: tasks,
-      );
     } on Exception catch (e) {
       print(e.toString());
     }
