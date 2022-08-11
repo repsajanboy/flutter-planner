@@ -8,7 +8,10 @@ class TaskListHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Task List'.toUpperCase()),
+        Text(
+          'Task List'.toUpperCase(),
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         Text(
           'Work',
           style: Theme.of(context).textTheme.titleLarge,

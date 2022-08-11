@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
             titleLarge: const TextStyle(
               fontFamily: 'Beneth',
               fontSize: 48.0,
-            )
+            ),
           )
         ),
         onGenerateRoute: router.onGenerateRoute,

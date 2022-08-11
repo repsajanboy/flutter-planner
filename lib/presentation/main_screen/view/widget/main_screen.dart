@@ -27,7 +27,7 @@ class MainScreen extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, RouteNames.createTask);
           },
-          child: const Text(' + Add New Task'),
+          child: Text(' + Add New Task'.toUpperCase()),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
