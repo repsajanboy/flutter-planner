@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import '../networking/api_client.dart';
 import '../data/tasks/post_task.dart';
 import '../data/tasks/task.dart';
@@ -9,9 +7,8 @@ class TaskRepository {
 
   TaskRepository({required this.apiClient});
 
-  Future<Task> postTask(PostTask postTask) async {
-    final result = await apiClient.postTask(postTask);
-    return Task.fromJson(result as Map<String, dynamic>);
+  Future<void> postTask(PostTask postTask) async {
+    await apiClient.postTask(postTask);
   }
 
   Future<List<Task>> fetchTasks() async {

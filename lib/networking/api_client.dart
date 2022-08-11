@@ -13,9 +13,13 @@ class ApiClient {
   Future<dynamic> postTask(PostTask postTask) async {
     try {
       const postTaskUrl = "$baseUrl/tasks.json";
-      final postTaskResponse =
-          await _dio.post(postTaskUrl, data: postTask.toJson());
-      return json.decode(postTaskResponse.data);
+      final postTaskResponse = await _dio.post(
+        postTaskUrl,
+        data: postTask.toJson(),
+      );
+
+      final toEncode = json.encode(postTaskResponse.data);
+      return json.decode(toEncode);
     } on DioError catch (e) {
       final err = json.decode(e.response.toString());
       print(err);

@@ -49,6 +49,7 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
         isComplete: state.isComplete);
     try {
       await taskRepository.postTask(postTask);
+      emit(state.copyWith(status: CreateTaskStatus.success));
     } on Exception catch (e) {
       print(e.toString());
     }
