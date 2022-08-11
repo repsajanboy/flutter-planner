@@ -27,6 +27,12 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Beneth',
               fontSize: 48.0,
             ),
+            bodyMedium: const TextStyle(
+              fontFamily: 'Nunito',
+              fontSize: 20.0,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           )
         ),
         onGenerateRoute: router.onGenerateRoute,

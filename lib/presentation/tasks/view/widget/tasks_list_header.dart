@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../utils/context_extension.dart';
 class TaskListHeader extends StatelessWidget {
   const TaskListHeader({Key? key}) : super(key: key);
 
@@ -10,7 +11,7 @@ class TaskListHeader extends StatelessWidget {
       children: [
         Text(
           'Task List'.toUpperCase(),
-          style: Theme.of(context).textTheme.titleMedium,
+          style: context.typo.subTitle54(),
         ),
         Text(
           'Work',
