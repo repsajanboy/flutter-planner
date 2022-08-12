@@ -11,11 +11,34 @@ class AppTextStyle {
 
   TextStyle subTitle54() {
     return const TextStyle(
-      fontFamily: 'Open Sans',
-      color: Colors.black54,
+        fontFamily: 'Open Sans',
+        color: Colors.black54,
+        fontSize: 18.0,
+        fontWeight: FontWeight.bold,
+        letterSpacing: 1.5);
+  }
+
+  TextStyle createTaskText() {
+    return const TextStyle(
       fontSize: 18.0,
+    );
+  }
+
+  TextStyle taskNameHintStyle() {
+    return TextStyle(
+      fontFamily: 'Nunito',
+      color: Colors.grey[400],
+      fontWeight: FontWeight.normal,
+      fontSize: 20.0,
+    );
+  }
+
+  TextStyle taskNameStyle() {
+    return const TextStyle(
+      fontFamily: 'Nunito',
+      color: Colors.black,
       fontWeight: FontWeight.bold,
-      letterSpacing: 1.5
+      fontSize: 20.0,
     );
   }
 }

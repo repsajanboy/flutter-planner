@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../routing/app_router_names.dart';
+import '../../../utils/context_extension.dart';
 import '../create.dart';
 
 class CreateTask extends StatelessWidget {
@@ -42,9 +43,10 @@ class CreateTask extends StatelessWidget {
                 builder: (context, state) {
                   return TextFormField(
                     cursorColor: Colors.black,
+                    style: context.typo.taskNameStyle(),
                     decoration: InputDecoration(
                       hintText: 'Task Name',
-                      hintStyle: TextStyle(color: Colors.grey[400]),
+                      hintStyle: context.typo.taskNameHintStyle(),
                       enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.grey.shade400)),
                       focusedBorder: const UnderlineInputBorder(
@@ -59,132 +61,158 @@ class CreateTask extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 20.0),
-              BlocBuilder<CreateTaskBloc, CreateTaskState>(
-                builder: (context, state) {
-                  return Row(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2222),
-                          ).then((date) {
-                            context
-                                .read<CreateTaskBloc>()
-                                .add(CreateTaskDateChanged(taskDate: date));
-                          });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(20.0)),
-                            color: Colors.orange.shade100.withOpacity(0.5),
-                          ),
-                          child: const Icon(
-                            Icons.calendar_month,
-                            color: Colors.orange,
-                            size: 32.0,
-                          ),
+              Container(
+                padding:
+                    const EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
+                child: Column(
+                  children: [
+                    BlocBuilder<CreateTaskBloc, CreateTaskState>(
+                      builder: (context, state) {
+                        return Row(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2222),
+                                ).then((date) {
+                                  context.read<CreateTaskBloc>().add(
+                                      CreateTaskDateChanged(taskDate: date));
+                                });
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(10.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(20.0)),
+                                  color:
+                                      Colors.orange.shade100.withOpacity(0.5),
+                                ),
+                                child: const Icon(
+                                  Icons.calendar_month,
+                                  color: Colors.orange,
+                                  size: 32.0,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 20.0),
+                            Text(
+                              DateFormat.yMMMMEEEEd().format(state.taskDate),
+                              style: context.typo.createTaskText(),
+                            )
+                          ],
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 20.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'From:',
+                              style: context.typo.createTaskText(),
+                            ),
+                            const SizedBox(height: 10.0),
+                            BlocBuilder<CreateTaskBloc, CreateTaskState>(
+                              builder: (context, state) {
+                                return Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.now(),
+                                        ).then((time) {
+                                          context.read<CreateTaskBloc>().add(
+                                                CreateTaskStartTimeChanged(
+                                                    startTime: time),
+                                              );
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(10.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(20.0)),
+                                          color: Colors.red.shade100
+                                              .withOpacity(0.5),
+                                        ),
+                                        child: const Icon(
+                                          Icons.access_time_outlined,
+                                          color: Colors.red,
+                                          size: 32.0,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 20.0),
+                                    Text(
+                                      state.startTime.format(context),
+                                      style: context.typo.createTaskText(),
+                                    )
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(width: 20.0),
-                      Text(DateFormat.yMMMMEEEEd().format(state.taskDate))
-                    ],
-                  );
-                },
-              ),
-              const SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('From:'),
-                      const SizedBox(height: 10.0),
-                      BlocBuilder<CreateTaskBloc, CreateTaskState>(
-                        builder: (context, state) {
-                          return Row(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  showTimePicker(
-                                    context: context,
-                                    initialTime: TimeOfDay.now(),
-                                  ).then((time) {
-                                    context.read<CreateTaskBloc>().add(
-                                        CreateTaskStartTimeChanged(
-                                            startTime: time));
-                                  });
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(10.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(20.0)),
-                                    color: Colors.red.shade100.withOpacity(0.5),
-                                  ),
-                                  child: const Icon(
-                                    Icons.access_time_outlined,
-                                    color: Colors.red,
-                                    size: 32.0,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 20.0),
-                              Text(state.startTime.format(context))
-                            ],
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('To:'),
-                      const SizedBox(height: 10.0),
-                      BlocBuilder<CreateTaskBloc, CreateTaskState>(
-                        builder: (context, state) {
-                          return Row(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  showTimePicker(
-                                    context: context,
-                                    initialTime: TimeOfDay.now(),
-                                  ).then((time) {
-                                    context.read<CreateTaskBloc>().add(
-                                        CreateTaskEndTimeChanged(
-                                            endTime: time));
-                                  });
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(10.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(20.0)),
-                                    color: Colors.red.shade100.withOpacity(0.5),
-                                  ),
-                                  child: const Icon(
-                                    Icons.access_time_outlined,
-                                    color: Colors.red,
-                                    size: 32.0,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 20.0),
-                              Text(state.endTime.format(context))
-                            ],
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'To:',
+                              style: context.typo.createTaskText(),
+                            ),
+                            const SizedBox(height: 10.0),
+                            BlocBuilder<CreateTaskBloc, CreateTaskState>(
+                              builder: (context, state) {
+                                return Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.now(),
+                                        ).then((time) {
+                                          context.read<CreateTaskBloc>().add(
+                                              CreateTaskEndTimeChanged(
+                                                  endTime: time));
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(10.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(20.0)),
+                                          color: Colors.red.shade100
+                                              .withOpacity(0.5),
+                                        ),
+                                        child: const Icon(
+                                          Icons.access_time_outlined,
+                                          color: Colors.red,
+                                          size: 32.0,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 20.0),
+                                    Text(
+                                      state.endTime.format(context),
+                                      style: context.typo.createTaskText(),
+                                    )
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               Expanded(
                 child: Align(
