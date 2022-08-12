@@ -49,9 +49,29 @@ class TasksList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            task.title,
-            style: Theme.of(context).textTheme.bodyMedium,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  task.title,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+              Transform.scale(
+                scale: 1.4,
+                child: Checkbox(
+                  checkColor: Colors.white,
+                  value: task.isComplete,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(3),
+                  ),
+                  onChanged: (bool? value) {
+                    //print(value);
+                  },
+                ),
+              )
+            ],
           ),
           const SizedBox(height: 10.0),
           Row(
@@ -65,22 +85,32 @@ class TasksList extends StatelessWidget {
                     .toUpperCase(),
                 style: context.typo.subText54(),
               ),
-              Row(
-                children: [
-                  Text(
-                    DateFormat.Hm().format(task.startTime),
-                    style: context.typo.subText54(),
-                  ),
-                  Text(
-                    ' - ',
-                    style: context.typo.subText54(),
-                  ),
-                  Text(
-                    DateFormat.Hm().format(task.endTime),
-                    style: context.typo.subText54(),
-                  ),
-                ],
-              ),
+              task.isComplete
+                  ? Text(
+                      'Completed !'.toUpperCase(),
+                      style: const TextStyle(
+                        fontFamily: 'Open Sans',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 14.0
+                      ),
+                    )
+                  : Row(
+                      children: [
+                        Text(
+                          DateFormat.Hm().format(task.startTime),
+                          style: context.typo.subText54(),
+                        ),
+                        Text(
+                          ' - ',
+                          style: context.typo.subText54(),
+                        ),
+                        Text(
+                          DateFormat.Hm().format(task.endTime),
+                          style: context.typo.subText54(),
+                        ),
+                      ],
+                    ),
             ],
           )
         ],

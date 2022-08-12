@@ -41,4 +41,11 @@ class AppTextStyle {
       fontSize: 20.0,
     );
   }
+
+  TextStyle fabTextStyle() {
+    return const TextStyle(
+      fontFamily: 'Open Sans',
+      fontSize: 20.0,
+    );
+  }
 }

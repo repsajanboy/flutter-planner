@@ -5,6 +5,7 @@ import '../../../../repositories/task_repository.dart';
 import '../../../../routing/app_router_names.dart';
 import 'side_bar_drawer.dart';
 import '../../../tasks/tasks.dart';
+import '../../../../utils/context_extension.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class MainScreen extends StatelessWidget {
         elevation: 0.0,
       ),
       floatingActionButton: Container(
-        margin: const EdgeInsets.all(10.0),
+        margin: const EdgeInsets.symmetric(vertical:10.0, horizontal: 20.0),
         width: double.infinity,
         child: FloatingActionButton(
           shape: const RoundedRectangleBorder(
@@ -27,7 +28,10 @@ class MainScreen extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, RouteNames.createTask);
           },
-          child: Text(' + Add New Task'.toUpperCase()),
+          child: Text(
+            ' + Add New Task'.toUpperCase(),
+            style: context.typo.fabTextStyle(),
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -40,7 +44,8 @@ class MainScreen extends StatelessWidget {
           ),
         ],
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding:
+              const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 100.0),
           child: const TasksList(),
         ),
       ),
