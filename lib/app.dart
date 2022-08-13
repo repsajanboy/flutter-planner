@@ -4,11 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import './routing/app_router.dart';
 import './networking/api_client.dart';
 import './repositories/task_repository.dart';
+import 'presentation/theme/theme.dart';
 
 class MyApp extends StatelessWidget {
   final ApiClient apiClient;
   final AppRouter router;
-  const MyApp({Key? key, required this.router, required this.apiClient}) : super(key: key);
+  const MyApp({Key? key, required this.router, required this.apiClient})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,25 +20,35 @@ class MyApp extends StatelessWidget {
           create: (context) => TaskRepository(apiClient: apiClient),
         )
       ],
-      child: MaterialApp(
-        title: 'Flutter planner',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          textTheme: ThemeData.light().textTheme.copyWith(
-            titleLarge: const TextStyle(
-              fontFamily: 'Beneth',
-              fontSize: 48.0,
-            ),
-            bodyMedium: const TextStyle(
-              fontFamily: 'Nunito',
-              fontSize: 20.0,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          )
+      child: BlocProvider(
+        create: (context) => ThemeBloc(),
+        child: BlocBuilder<ThemeBloc, ThemeState>(
+          builder: _buildWithTheme,
         ),
-        onGenerateRoute: router.onGenerateRoute,
       ),
+    );
+  }
+
+  Widget _buildWithTheme(BuildContext context, ThemeState state) {
+    return MaterialApp(
+      title: 'Flutter planner',
+      debugShowCheckedModeBanner: false,
+      theme: state.themeData,
+      // theme: ThemeData(
+      //   textTheme: ThemeData.light().textTheme.copyWith(
+      //         titleLarge: const TextStyle(
+      //           fontFamily: 'Beneth',
+      //           fontSize: 48.0,
+      //         ),
+      //         bodyMedium: const TextStyle(
+      //           fontFamily: 'Nunito',
+      //           fontSize: 20.0,
+      //           color: Colors.black,
+      //           fontWeight: FontWeight.bold,
+      //         ),
+      //       ),
+      // ),
+      onGenerateRoute: router.onGenerateRoute,
     );
   }
 }
