@@ -20,7 +20,7 @@ class MainScreen extends StatelessWidget {
         elevation: 0.0,
       ),
       floatingActionButton: Container(
-        margin: const EdgeInsets.symmetric(vertical:10.0, horizontal: 20.0),
+        margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         width: double.infinity,
         child: FloatingActionButton(
           shape: const RoundedRectangleBorder(
@@ -40,7 +40,7 @@ class MainScreen extends StatelessWidget {
           BlocProvider(
             create: (context) =>
                 TasksBloc(taskRepository: context.read<TaskRepository>())
-                  ..add(const TasksFetched()),
+                  ..add(TasksFetched()),
           ),
         ],
         child: Container(

@@ -60,14 +60,18 @@ class TasksList extends StatelessWidget {
               ),
               Transform.scale(
                 scale: 1.4,
-                child: Checkbox(
-                  checkColor: Colors.white,
-                  value: task.isComplete,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(3),
-                  ),
-                  onChanged: (bool? value) {
-                    //print(value);
+                child: BlocBuilder<TasksBloc, TasksState>(
+                  builder: (context, state) {
+                    return Checkbox(
+                      checkColor: Colors.white,
+                      value: task.isComplete,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      onChanged: (bool? value) {
+                        context.read<TasksBloc>().add(TaskCompleteChanged(isComplete: value, id: task.id));
+                      },
+                    );
                   },
                 ),
               )
@@ -89,11 +93,10 @@ class TasksList extends StatelessWidget {
                   ? Text(
                       'Completed !'.toUpperCase(),
                       style: const TextStyle(
-                        fontFamily: 'Open Sans',
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 14.0
-                      ),
+                          fontFamily: 'Open Sans',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 14.0),
                     )
                   : Row(
                       children: [

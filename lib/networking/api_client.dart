@@ -39,4 +39,22 @@ class ApiClient {
       //throw Exception(err['msg']);
     }
   }
+
+  Future<dynamic> completeTask(String id, bool isComplete) async {
+    try {
+      final taskUrl = "$baseUrl/tasks/$id.json";
+      final taskResponse = await _dio.patch(
+        taskUrl,
+        data: json.encode({
+          'isComplete': isComplete,
+        }),
+      );
+      final toEncode = json.encode(taskResponse.data);
+      return json.decode(toEncode);
+    } on DioError catch (e) {
+      final err = json.decode(e.response.toString());
+      print(err);
+      //throw Exception(err['msg']);
+    }
+  }
 }

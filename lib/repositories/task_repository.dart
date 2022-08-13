@@ -27,4 +27,8 @@ class TaskRepository {
      });
      return fetchTasks;
   }
+
+  Future<void> completeTask(String id, bool isComplete) async {
+    await apiClient.completeTask(id, isComplete);
+  }
 }
