@@ -114,8 +114,8 @@ class CreateTask extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'From:',
-                              style: context.typo.createTaskText(),
+                              'Start Time:',
+                              style: context.typo.createTaskLabel(),
                             ),
                             const SizedBox(height: 10.0),
                             BlocBuilder<CreateTaskBloc, CreateTaskState>(
@@ -164,8 +164,8 @@ class CreateTask extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'To:',
-                              style: context.typo.createTaskText(),
+                              'End Time:',
+                              style: context.typo.createTaskLabel(),
                             ),
                             const SizedBox(height: 10.0),
                             BlocBuilder<CreateTaskBloc, CreateTaskState>(

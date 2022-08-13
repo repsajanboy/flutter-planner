@@ -24,6 +24,13 @@ class AppTextStyle {
     );
   }
 
+    TextStyle createTaskLabel() {
+    return const TextStyle(
+      fontSize: 16.0,
+      color: Colors.black38
+    );
+  }
+
   TextStyle taskNameHintStyle() {
     return TextStyle(
       fontFamily: 'Nunito',
