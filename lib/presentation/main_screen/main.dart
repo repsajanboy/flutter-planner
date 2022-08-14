@@ -1,1 +1,2 @@
-export './view/widget/main_screen.dart';
+export './bloc/main_screen_bloc.dart';
+export './view/view.dart';

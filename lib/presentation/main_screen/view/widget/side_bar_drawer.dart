@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../category/category.dart';
 import 'color_picker.dart';
 
 class SideBarDrawer extends StatelessWidget {
@@ -23,7 +25,10 @@ class SideBarDrawer extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
             ),
-            title: const Text('Work', style: TextStyle(color: Colors.white70),),
+            title: const Text(
+              'Work',
+              style: TextStyle(color: Colors.white70),
+            ),
           ),
           ListTile(
             leading: Container(
@@ -37,7 +42,10 @@ class SideBarDrawer extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
             ),
-            title: const Text('Family', style: TextStyle(color: Colors.white70),),
+            title: const Text(
+              'Family',
+              style: TextStyle(color: Colors.white70),
+            ),
           ),
           ListTile(
             leading: Container(
@@ -51,7 +59,10 @@ class SideBarDrawer extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
             ),
-            title: const Text('Special', style: TextStyle(color: Colors.white70),),
+            title: const Text(
+              'Special',
+              style: TextStyle(color: Colors.white70),
+            ),
           ),
           ListTile(
             leading: Container(
@@ -65,11 +76,20 @@ class SideBarDrawer extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
             ),
-            title: const Text('Personal', style: TextStyle(color: Colors.white70),),
+            title: const Text(
+              'Personal',
+              style: TextStyle(color: Colors.white70),
+            ),
           ),
           ListTile(
-            leading: const Icon(Icons.add, color: Colors.white70,),
-            title: const Text('Add Category', style: TextStyle(color: Colors.white70),),
+            leading: const Icon(
+              Icons.add,
+              color: Colors.white70,
+            ),
+            title: const Text(
+              'Add Category',
+              style: TextStyle(color: Colors.white70),
+            ),
             onTap: () {
               showModalBottomSheet<void>(
                 context: context,
@@ -93,7 +113,7 @@ class SideBarDrawer extends StatelessWidget {
                           topRight: Radius.circular(30.0),
                         ),
                       ),
-                      height: MediaQuery.of(context).size.height * .43,
+                      height: MediaQuery.of(context).size.height * .48,
                       child: Column(
                         children: [
                           TextFormField(
@@ -115,7 +135,11 @@ class SideBarDrawer extends StatelessWidget {
                           const SizedBox(
                             height: 25.0,
                           ),
-                          const ColorPicker(),
+                          Expanded(
+                              child: BlocProvider(
+                            create: (context) => CategoryBloc()..add(CategoryColorChanged(index: 0)),
+                            child: const ColorPicker(),
+                          )),
                           const SizedBox(
                             height: 25.0,
                           ),
