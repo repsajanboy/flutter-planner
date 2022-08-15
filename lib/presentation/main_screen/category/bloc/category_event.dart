@@ -13,3 +13,5 @@ class CategoryNameChanged extends CategoryEvent {
 
   CategoryNameChanged({this.categoryName});
 }
+
+class CreateCategorySaved extends CategoryEvent {}

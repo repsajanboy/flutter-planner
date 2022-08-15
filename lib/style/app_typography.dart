@@ -55,4 +55,18 @@ class AppTextStyle {
       fontSize: 20.0,
     );
   }
+
+  TextStyle categoryNameTextStyle() {
+    return const TextStyle(
+      fontFamily: 'Nunito',
+      color: Colors.white70,
+    );
+  }
+
+  TextStyle categoryNameHintStyle() {
+    return const TextStyle(
+      fontFamily: 'Nunito',
+      color: Colors.white70,
+    );
+  }
 }

@@ -5,6 +5,7 @@ import './routing/app_router.dart';
 import './networking/api_client.dart';
 import './repositories/task_repository.dart';
 import 'presentation/theme/theme.dart';
+import 'repositories/category_repository.dart';
 
 class MyApp extends StatelessWidget {
   final ApiClient apiClient;
@@ -18,7 +19,10 @@ class MyApp extends StatelessWidget {
       providers: [
         RepositoryProvider<TaskRepository>(
           create: (context) => TaskRepository(apiClient: apiClient),
-        )
+        ),
+        RepositoryProvider<CategoryRepository>(
+          create: (context) => CategoryRepository(apiClient: apiClient),
+        ),
       ],
       child: BlocProvider(
         create: (context) => ThemeBloc(),
