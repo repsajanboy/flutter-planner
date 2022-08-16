@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../repositories/task_repository.dart';
 import '../../../../routing/app_router_names.dart';
-import 'side_bar_drawer.dart';
+import '../../sidebar/sidebar.dart';
 import '../../../tasks/tasks.dart';
 import '../../../../utils/context_extension.dart';
 

@@ -1,5 +1,5 @@
-class Catergory {
-  Catergory({
+class Category {
+  Category({
     required this.id,
     required this.name,
     required this.theme,

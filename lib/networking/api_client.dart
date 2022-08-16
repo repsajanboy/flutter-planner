@@ -27,6 +27,7 @@ class ApiClient {
       //throw Exception(err['msg']);
     }
   }
+
   //Fetch all tasks
   Future<dynamic> fetchTasks() async {
     try {
@@ -40,6 +41,7 @@ class ApiClient {
       //throw Exception(err['msg']);
     }
   }
+
   //Update task to complete
   Future<dynamic> completeTask(String id, bool isComplete) async {
     try {
@@ -69,6 +71,19 @@ class ApiClient {
       );
 
       final toEncode = json.encode(postCategoryResponse.data);
+      return json.decode(toEncode);
+    } on DioError catch (e) {
+      final err = json.decode(e.response.toString());
+      print(err);
+      //throw Exception(err['msg']);
+    }
+  }
+
+  Future<dynamic> fetchCategories() async {
+    try {
+      const categoriesUrl = "$baseUrl/categories.json";
+      final categoriesResponse = await _dio.get(categoriesUrl);
+      final toEncode = json.encode(categoriesResponse.data);
       return json.decode(toEncode);
     } on DioError catch (e) {
       final err = json.decode(e.response.toString());
