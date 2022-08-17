@@ -28,16 +28,18 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => ThemeBloc(),
-          ),
-          BlocProvider(
             create: (context) => SidebarBloc(
                 categoryRepository: context.read<CategoryRepository>())
               ..add(CategoriesFetched()),
           ),
         ],
-        child: BlocBuilder<ThemeBloc, ThemeState>(
-          builder: _buildWithTheme,
+        child: BlocProvider(
+          create: (context) =>
+              ThemeBloc(sidebarBloc: BlocProvider.of<SidebarBloc>(context))
+                ..add(DefaultThemeLoaded()),
+          child: BlocBuilder<ThemeBloc, ThemeState>(
+            builder: _buildWithTheme,
+          ),
         ),
       ),
     );

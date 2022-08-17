@@ -28,6 +28,7 @@ class SidebarBloc extends Bloc<SidebarEvent, SidebarState> {
         emit(state.copyWith(
           status: SideBarStatus.success,
           categories: categories,
+          selectedCategoryName: categories[0].name,
         ));
       }
     } on Exception catch (e) {

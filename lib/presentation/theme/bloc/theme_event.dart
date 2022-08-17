@@ -7,3 +7,5 @@ class ThemeChanged extends ThemeEvent {
 
   ThemeChanged({required this.theme});
 }
+
+class DefaultThemeLoaded extends ThemeEvent {}
