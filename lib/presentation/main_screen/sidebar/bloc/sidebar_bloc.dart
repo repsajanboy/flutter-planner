@@ -10,6 +10,10 @@ part 'sidebar_state.dart';
 class SidebarBloc extends Bloc<SidebarEvent, SidebarState> {
   SidebarBloc({required this.categoryRepository}) : super(SidebarInitial()) {
     on<CategoriesFetched>(_fetchedCategories);
+    on<CategoriesIndexSelected>(
+        (event, emit) => emit(state.copyWith(selectedIndex: event.index)));
+    on<CategoriesNameSelected>((event, emit) =>
+        emit(state.copyWith(selectedCategoryName: event.selectedCategoryName)));
   }
 
   final CategoryRepository categoryRepository;
@@ -18,7 +22,7 @@ class SidebarBloc extends Bloc<SidebarEvent, SidebarState> {
     CategoriesFetched event,
     Emitter<SidebarState> emit,
   ) async {
-    try{
+    try {
       if (state.status == SideBarStatus.initial) {
         final categories = await categoryRepository.fetchCategories();
         emit(state.copyWith(

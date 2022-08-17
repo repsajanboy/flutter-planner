@@ -20,7 +20,7 @@ class AppTextStyle {
 
   TextStyle createTaskText() {
     return const TextStyle(
-      fontSize: 18.0,
+      fontSize: 16.0,
     );
   }
 

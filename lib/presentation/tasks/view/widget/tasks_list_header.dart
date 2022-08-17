@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../utils/context_extension.dart';
+import '../../../main_screen/sidebar/sidebar.dart';
+
 class TaskListHeader extends StatelessWidget {
   const TaskListHeader({Key? key}) : super(key: key);
 
@@ -13,9 +16,13 @@ class TaskListHeader extends StatelessWidget {
           'Task List'.toUpperCase(),
           style: context.typo.subTitle54(),
         ),
-        Text(
-          'Work',
-          style: Theme.of(context).textTheme.titleLarge,
+        BlocBuilder<SidebarBloc, SidebarState>(
+          builder: (context, state) {
+            return Text(
+              state.selectedCategoryName,
+              style: Theme.of(context).textTheme.titleLarge,
+            );
+          },
         ),
       ],
     );

@@ -92,10 +92,10 @@ class TasksList extends StatelessWidget {
               task.isComplete
                   ? Text(
                       'Completed !'.toUpperCase(),
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontFamily: 'Open Sans',
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Theme.of(context).primaryColor,
                           fontSize: 14.0),
                     )
                   : Row(
