@@ -32,14 +32,13 @@ class MyApp extends StatelessWidget {
                 categoryRepository: context.read<CategoryRepository>())
               ..add(CategoriesFetched()),
           ),
-        ],
-        child: BlocProvider(
-          create: (context) =>
-              ThemeBloc(sidebarBloc: BlocProvider.of<SidebarBloc>(context))
-                ..add(DefaultThemeLoaded()),
-          child: BlocBuilder<ThemeBloc, ThemeState>(
-            builder: _buildWithTheme,
+          BlocProvider(
+            create: (context) =>
+                ThemeBloc(sidebarBloc: BlocProvider.of<SidebarBloc>(context)),
           ),
+        ],
+        child: BlocBuilder<ThemeBloc, ThemeState>(
+          builder: _buildWithTheme,
         ),
       ),
     );

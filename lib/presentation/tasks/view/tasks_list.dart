@@ -19,6 +19,9 @@ class TasksList extends StatelessWidget {
           builder: (context, state) {
             switch (state.status) {
               case TaskStatus.success:
+                if(state.tasks.isEmpty) {
+                  return const Center(child: Text('No Tasks added...'),);
+                }
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
