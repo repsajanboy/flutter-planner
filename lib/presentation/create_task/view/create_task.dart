@@ -214,6 +214,59 @@ class CreateTask extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: 20.0),
+              Container(
+                padding: const EdgeInsets.only(
+                    left: 20.0, right: 10.0, top: 10.0, bottom: 10.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black26),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10.0),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20.0)),
+                            color: Colors.purple.shade100.withOpacity(0.5),
+                          ),
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: Center(
+                              child: Text(
+                                'House Chores'.substring(0, 1),
+                                style: const TextStyle(
+                                  fontFamily: 'Open Sans',
+                                  color: Colors.purple,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8.0),
+                        const Text(
+                          'House Chores',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Nunito',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Icon(Icons.arrow_forward_ios_rounded)
+                  ],
+                ),
+              ),
               Expanded(
                 child: Align(
                   alignment: Alignment.bottomCenter,
