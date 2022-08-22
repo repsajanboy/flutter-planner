@@ -27,4 +27,12 @@ class CreateTaskEndTimeChanged extends CreateTaskEvent {
   CreateTaskEndTimeChanged({required this.endTime});
 }
 
+class CreateTaskCategoryChanged extends CreateTaskEvent {
+  final String? category;
+  final int? categoryTheme;
+  CreateTaskCategoryChanged({required this.category, required this.categoryTheme});
+}
+
+class CreateTaskCategoryIndexLoaded extends CreateTaskEvent {}
+
 class CreateTaskSaved extends CreateTaskEvent {}

@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 
 import '../../../repositories/task_repository.dart';
 import '../../../data/tasks/post_task.dart';
+import '../../main_screen/sidebar/sidebar.dart';
 
 part 'create_task_event.dart';
 part 'create_task_state.dart';
 
 class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
-  CreateTaskBloc({required this.taskRepository}) : super(CreateTaskState()) {
+  CreateTaskBloc({required this.sidebarBloc, required this.taskRepository})
+      : super(CreateTaskState()) {
     on<CreateTaskTitleChanged>(
         (event, emit) => emit(state.copyWith(title: event.title)));
     on<CreateTaskDateChanged>(
@@ -18,10 +20,20 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
         (event, emit) => emit(state.copyWith(startTime: event.startTime)));
     on<CreateTaskEndTimeChanged>(
         (event, emit) => emit(state.copyWith(endTime: event.endTime)));
+    on<CreateTaskCategoryChanged>(
+        (event, emit) => emit(state.copyWith(category: event.category, categoryTheme: event.categoryTheme)));
+    on<CreateTaskCategoryIndexLoaded>(
+      (event, emit) => emit(state.copyWith(
+        category: sidebarBloc.state.categories[0].name,
+        categoryTheme: sidebarBloc.state.categories[0].theme,
+        isCategoryLoaded: true,
+      )),
+    );
     on<CreateTaskSaved>(_postTask);
   }
 
   final TaskRepository taskRepository;
+  final SidebarBloc sidebarBloc;
 
   Future<void> _postTask(
     CreateTaskSaved event,
@@ -46,6 +58,7 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
         taskDate: state.taskDate,
         startTime: _startTime,
         endTime: _endTime,
+        category: state.category,
         isComplete: state.isComplete);
     try {
       await taskRepository.postTask(postTask);

@@ -7,7 +7,7 @@ import './repositories/task_repository.dart';
 import 'presentation/theme/theme.dart';
 import 'repositories/category_repository.dart';
 import './presentation/main_screen/sidebar/sidebar.dart';
-
+import './presentation/create_task/create.dart';
 class MyApp extends StatelessWidget {
   final ApiClient apiClient;
   final AppRouter router;
@@ -35,6 +35,12 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) =>
                 ThemeBloc(sidebarBloc: BlocProvider.of<SidebarBloc>(context)),
+          ),
+          BlocProvider(
+            create: (context) => CreateTaskBloc(
+              taskRepository: context.read<TaskRepository>(),
+              sidebarBloc: BlocProvider.of<SidebarBloc>(context),
+            )..add(CreateTaskCategoryIndexLoaded()),
           ),
         ],
         child: BlocBuilder<ThemeBloc, ThemeState>(

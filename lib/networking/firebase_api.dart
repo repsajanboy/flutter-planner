@@ -4,7 +4,7 @@ import '../data/category/post_category.dart';
 import '../data/tasks/post_task.dart';
 
 class FirebaseApi {
-  final tasksReference = FirebaseDatabase.instance.ref().child('tasks');
+  final tasksReference = FirebaseDatabase.instance.ref('tasks');
   final categoriesRef = FirebaseDatabase.instance.ref('categories');
 
   Future<dynamic> getTasks() async {
@@ -18,7 +18,7 @@ class FirebaseApi {
   }
 
   Future<void> postTask(PostTask postTask) async {
-    await tasksReference.set(postTask.toJson());
+    await tasksReference.push().set(postTask.toJson());
   }
 
   Future<dynamic> getCategories() async {
