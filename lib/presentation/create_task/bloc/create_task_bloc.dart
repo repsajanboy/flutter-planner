@@ -24,8 +24,8 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
         (event, emit) => emit(state.copyWith(category: event.category, categoryTheme: event.categoryTheme)));
     on<CreateTaskCategoryIndexLoaded>(
       (event, emit) => emit(state.copyWith(
-        category: sidebarBloc.state.categories[0].name,
-        categoryTheme: sidebarBloc.state.categories[0].theme,
+        category: sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].name,
+        categoryTheme: sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].theme,
         isCategoryLoaded: true,
       )),
     );

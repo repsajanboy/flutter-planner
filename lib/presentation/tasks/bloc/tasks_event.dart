@@ -12,3 +12,9 @@ class TaskCompleteChanged extends TasksEvent {
 
   TaskCompleteChanged({this.isComplete, this.id});
 }
+
+class TasksListFiltered extends TasksEvent {
+  final String category;
+
+  TasksListFiltered({required this.category});
+}

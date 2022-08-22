@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../repositories/task_repository.dart';
 import '../../../../routing/app_router_names.dart';
+import '../../../create_task/create.dart';
 import '../../sidebar/sidebar.dart';
 import '../../../tasks/tasks.dart';
 import '../../../../utils/context_extension.dart';
@@ -12,38 +13,39 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const SideBarDrawer(),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        iconTheme: const IconThemeData(color: Colors.black),
-        elevation: 0.0,
-      ),
-      floatingActionButton: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-        width: double.infinity,
-        child: FloatingActionButton(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15.0))),
-          onPressed: () {
-            Navigator.pushNamed(context, RouteNames.createTask);
-          },
-          child: Text(
-            ' + Add New Task'.toUpperCase(),
-            style: context.typo.fabTextStyle(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => TasksBloc(
+            taskRepository: context.read<TaskRepository>(),
+            sidebarBloc: BlocProvider.of<SidebarBloc>(context),
+          )..add(TasksFetched()),
+        ),
+      ],
+      child: Scaffold(
+        drawer: const SideBarDrawer(),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          iconTheme: const IconThemeData(color: Colors.black),
+          elevation: 0.0,
+        ),
+        floatingActionButton: Container(
+          margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+          width: double.infinity,
+          child: FloatingActionButton(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            onPressed: () {
+              Navigator.pushNamed(context, RouteNames.createTask);
+            },
+            child: Text(
+              ' + Add New Task'.toUpperCase(),
+              style: context.typo.fabTextStyle(),
+            ),
           ),
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) =>
-                TasksBloc(taskRepository: context.read<TaskRepository>())
-                  ..add(TasksFetched()),
-          ),
-        ],
-        child: Container(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        body: Container(
           padding:
               const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 100.0),
           child: const TasksList(),

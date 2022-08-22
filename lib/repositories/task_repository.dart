@@ -9,7 +9,7 @@ class TaskRepository {
   TaskRepository({required this.apiClient});
 
   Future<void> postTask(PostTask postTask) async {
-    await apiClient.postTask(postTask);
+    await _firebaseApi.postTask(postTask);
   }
 
   Future<List<Task>> fetchTasks() async {

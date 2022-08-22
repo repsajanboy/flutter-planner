@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../data/category/category.dart';
 import '../../../../repositories/category_repository.dart';
 import '../../../../utils/color_picker_items.dart';
+import '../../../tasks/tasks.dart';
 import '../../../theme/theme.dart';
 import '../../category/category.dart';
 import '../sidebar.dart';
@@ -140,6 +141,8 @@ class SideBarDrawer extends StatelessWidget {
               .add(ThemeChanged(theme: AppTheme.values[category.theme]));
           BlocProvider.of<SidebarBloc>(context)
               .add(CategoriesNameSelected(selectedCategoryName: category.name));
+          BlocProvider.of<TasksBloc>(context)
+              .add(TasksListFiltered(category: category.name));
         },
       ),
     );

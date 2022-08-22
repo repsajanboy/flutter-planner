@@ -8,6 +8,8 @@ import 'presentation/theme/theme.dart';
 import 'repositories/category_repository.dart';
 import './presentation/main_screen/sidebar/sidebar.dart';
 import './presentation/create_task/create.dart';
+import './presentation/tasks/tasks.dart';
+
 class MyApp extends StatelessWidget {
   final ApiClient apiClient;
   final AppRouter router;

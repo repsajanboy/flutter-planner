@@ -5,8 +5,8 @@ import 'package:intl/intl.dart';
 import '../../../routing/app_router_names.dart';
 import '../../../utils/color_picker_items.dart';
 import '../../../utils/context_extension.dart';
-import '../../main_screen/sidebar/sidebar.dart';
 import '../create.dart';
+import 'widget/category_picker.dart';
 
 class CreateTask extends StatelessWidget {
   const CreateTask({Key? key}) : super(key: key);
@@ -218,95 +218,23 @@ class CreateTask extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20.0),
-              BlocBuilder<CreateTaskBloc, CreateTaskState>(
-                builder: (context, state) {
-                  final _color = colorPickerItems
-                      .firstWhere((e) => e.id == state.categoryTheme);
-                  return InkWell(
-                    onTap: () {
-                      showModalBottomSheet<void>(
-                        context: context,
-                        isScrollControlled: true,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(30.0)),
-                        ),
-                        builder: (BuildContext context) {
-                          return BlocBuilder<SidebarBloc, SidebarState>(
-                            builder: (context, state) {
-                              return Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 20.0),
-                                child: ListView.separated(
-                                  shrinkWrap: true,
-                                  physics: const ClampingScrollPhysics(),
-                                  separatorBuilder: (BuildContext context, int index) => const Divider(height: 2, color: Colors.black,),
-                                  itemCount: state.categories.length,
-                                  itemBuilder: (context, index) {
-                                    final _color = colorPickerItems.firstWhere(
-                                        (e) =>
-                                            e.id ==
-                                            state.categories[index].theme);
-                                    return Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 8.0, top: 8.0),
-                                      child: ListTile(
-                                        leading: Card(
-                                          shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(8.0)),
-                                          ),
-                                          elevation: 5.0,
-                                          color: _color.colors,
-                                          child: SizedBox(
-                                            width: 50.0,
-                                            height: 50.0,
-                                            child: Center(
-                                              child: Text(
-                                                state.categories[index].name
-                                                    .substring(0, 1),
-                                                style: const TextStyle(
-                                                  fontFamily: 'Open Sans',
-                                                  color: Colors.white70,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 22.0,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        title: Text(
-                                          state.categories[index].name,
-                                          style: const TextStyle(
-                                            color: Colors.black87,
-                                            fontFamily: 'Nunito',
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16.0,
-                                          ),
-                                        ),
-                                        onTap: () {
-                                          BlocProvider.of<CreateTaskBloc>(
-                                                  context)
-                                              .add(CreateTaskCategoryChanged(
-                                            category:
-                                                state.categories[index].name,
-                                            categoryTheme:
-                                                state.categories[index].theme,
-                                          ));
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    );
-                                  },
-                                ),
-                              );
-                              
-                            },
-                          );
-                        },
-                      );
-                    },
-                    child: Container(
+              InkWell(
+                onTap: () {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    isScrollControlled: true,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(30.0)),
+                    ),
+                    builder: (BuildContext context) => const CategoryPicker(),
+                  );
+                },
+                child: BlocBuilder<CreateTaskBloc, CreateTaskState>(
+                  builder: (context, state) {
+                    final _color = colorPickerItems
+                        .firstWhere((e) => e.id == state.categoryTheme);
+                    return Container(
                       padding: const EdgeInsets.only(
                           left: 20.0, right: 10.0, top: 10.0, bottom: 10.0),
                       decoration: BoxDecoration(
@@ -359,9 +287,9 @@ class CreateTask extends StatelessWidget {
                           const Icon(Icons.arrow_forward_ios_rounded)
                         ],
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
               Expanded(
                 child: Align(
@@ -380,7 +308,11 @@ class CreateTask extends StatelessWidget {
                           padding: const EdgeInsets.all(20.0),
                           child: Text(
                             'Create Task'.toUpperCase(),
-                            style: const TextStyle(fontSize: 16.0),
+                            style: const TextStyle(
+                              fontFamily: 'Open Sans',
+                              fontSize: 16.0,
+                              letterSpacing: 1.5,
+                            ),
                           ),
                         ),
                       );
