@@ -5,8 +5,8 @@ import '../../../../utils/color_picker_items.dart';
 import '../../../main_screen/sidebar/sidebar.dart';
 import '../../create.dart';
 
-class CategoryPicker extends StatelessWidget {
-  const CategoryPicker({Key? key}) : super(key: key);
+class CreateTaskCategoryPicker extends StatelessWidget {
+  const CreateTaskCategoryPicker({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
