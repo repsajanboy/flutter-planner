@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../data/category/category.dart';
-import '../../../../repositories/category_repository.dart';
 import '../../../../utils/color_picker_items.dart';
 import '../../../tasks/tasks.dart';
 import '../../../theme/theme.dart';
