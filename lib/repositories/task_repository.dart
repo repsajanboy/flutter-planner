@@ -1,12 +1,10 @@
-import '../networking/api_client.dart';
 import '../data/tasks/post_task.dart';
 import '../data/tasks/task.dart';
 import '../networking/firebase_api.dart';
 
 class TaskRepository {
-  final ApiClient apiClient;
   final _firebaseApi = FirebaseApi();
-  TaskRepository({required this.apiClient});
+  TaskRepository();
 
   Future<void> postTask(PostTask postTask) async {
     await _firebaseApi.postTask(postTask);
@@ -14,8 +12,6 @@ class TaskRepository {
 
   Future<List<Task>> fetchTasks() async {
     final result = await _firebaseApi.getTasks();
-    // final result = await apiClient.fetchTasks();
-    //final extractedData = result as Map<String, dynamic>;
     final List<Task> fetchTasks = [];
     if (result != null) {
       result.forEach((key, value) {
@@ -34,6 +30,6 @@ class TaskRepository {
   }
 
   Future<void> completeTask(String id, bool isComplete) async {
-    await apiClient.completeTask(id, isComplete);
+    await _firebaseApi.completeTask(id, isComplete);
   }
 }

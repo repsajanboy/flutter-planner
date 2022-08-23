@@ -4,8 +4,9 @@ import 'package:dio/dio.dart';
 import '../data/category/post_category.dart';
 import '../data/tasks/post_task.dart';
 
+//this site is not working
 const baseUrl =
-    "https://flutter-planner-10aa7-default-rtdb.asia-southeast1.firebasedatabase.app";
+    "https://example.site.com";
 
 class ApiClient {
   final _dio = Dio();
@@ -23,8 +24,7 @@ class ApiClient {
       return json.decode(toEncode);
     } on DioError catch (e) {
       final err = json.decode(e.response.toString());
-      print(err);
-      //throw Exception(err['msg']);
+      throw Exception(err);
     }
   }
 
@@ -37,8 +37,7 @@ class ApiClient {
       return json.decode(toEncode);
     } on DioError catch (e) {
       final err = json.decode(e.response.toString());
-      print(err);
-      //throw Exception(err['msg']);
+      throw Exception(err);
     }
   }
 
@@ -56,8 +55,7 @@ class ApiClient {
       return json.decode(toEncode);
     } on DioError catch (e) {
       final err = json.decode(e.response.toString());
-      print(err);
-      //throw Exception(err['msg']);
+      throw Exception(err);
     }
   }
 
@@ -74,8 +72,7 @@ class ApiClient {
       return json.decode(toEncode);
     } on DioError catch (e) {
       final err = json.decode(e.response.toString());
-      print(err);
-      //throw Exception(err['msg']);
+      throw Exception(err);
     }
   }
 
@@ -87,8 +84,7 @@ class ApiClient {
       return json.decode(toEncode);
     } on DioError catch (e) {
       final err = json.decode(e.response.toString());
-      print(err);
-      //throw Exception(err['msg']);
+      throw Exception(err);
     }
   }
 }

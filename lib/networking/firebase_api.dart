@@ -21,6 +21,12 @@ class FirebaseApi {
     await tasksReference.push().set(postTask.toJson());
   }
 
+  Future<void> completeTask(String id, bool isComplete) async {
+    await tasksReference.update({
+      "$id/isComplete": isComplete
+    });
+  }
+
   Future<dynamic> getCategories() async {
     final snapShot = await categoriesRef.get();
     if(snapShot.exists) {

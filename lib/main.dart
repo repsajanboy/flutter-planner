@@ -3,7 +3,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import './routing/app_router.dart';
-import './networking/api_client.dart';
 import 'app.dart';
 
 void main() async {
@@ -12,7 +11,6 @@ void main() async {
   FirebaseDatabase.instance.setPersistenceEnabled(true);
   runApp(
     MyApp(
-      apiClient: ApiClient(),
       router: AppRouter(),
     ),
   );

@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import './routing/app_router.dart';
-import './networking/api_client.dart';
 import './repositories/task_repository.dart';
 import 'presentation/theme/theme.dart';
 import 'repositories/category_repository.dart';
 import './presentation/main_screen/sidebar/sidebar.dart';
 import './presentation/create_task/create.dart';
-import './presentation/tasks/tasks.dart';
 
 class MyApp extends StatelessWidget {
-  final ApiClient apiClient;
   final AppRouter router;
-  const MyApp({Key? key, required this.router, required this.apiClient})
+  const MyApp({Key? key, required this.router})
       : super(key: key);
 
   @override
@@ -21,10 +18,10 @@ class MyApp extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<TaskRepository>(
-          create: (context) => TaskRepository(apiClient: apiClient),
+          create: (context) => TaskRepository(),
         ),
         RepositoryProvider<CategoryRepository>(
-          create: (context) => CategoryRepository(apiClient: apiClient),
+          create: (context) => CategoryRepository(),
         ),
       ],
       child: MultiBlocProvider(

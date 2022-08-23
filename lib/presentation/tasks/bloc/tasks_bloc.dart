@@ -64,9 +64,11 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     try {
       await taskRepository.completeTask(event.id!, event.isComplete!);
       final tasks = await taskRepository.fetchTasks();
+      final filteredTasks = tasks.where((e) => e.category == sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].name).toList();
       emit(state.copyWith(
         status: TaskStatus.success,
         tasks: tasks,
+        filteredTasks: filteredTasks,
       ));
     } on Exception catch (e) {
       print(e.toString());

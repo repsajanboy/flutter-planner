@@ -6,7 +6,6 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
-import 'package:flutter_planner/networking/api_client.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
@@ -16,7 +15,7 @@ import 'package:flutter_planner/routing/app_router.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(apiClient: ApiClient(), router: AppRouter(),));
+    await tester.pumpWidget(MyApp(router: AppRouter(),));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
