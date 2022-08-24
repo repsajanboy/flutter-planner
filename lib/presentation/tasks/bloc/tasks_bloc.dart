@@ -27,12 +27,14 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     try {
       if (state.status == TaskStatus.initial) {
         final tasks = await taskRepository.fetchTasks();
-        final filteredTasks = tasks.where((e) => e.category == sidebarBloc.state.categories[0].name).toList();
+        final filteredTasks = tasks
+            .where((e) => e.category == sidebarBloc.state.categories[0].name)
+            .toList();
+        filteredTasks.sort((a, b) => a.startTime.compareTo(b.startTime));
         emit(state.copyWith(
-          status: TaskStatus.success,
-          tasks: tasks,
-          filteredTasks: filteredTasks
-        ));
+            status: TaskStatus.success,
+            tasks: tasks,
+            filteredTasks: filteredTasks));
       }
     } on Exception catch (e) {
       print(e.toString());
@@ -46,12 +48,14 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     try {
       emit(state.copyWith(filteredTasks: []));
       final tasks = await taskRepository.fetchTasks();
-      final filteredTasks = tasks.where((e) => e.category == event.category).toList();
-       emit(state.copyWith(
-          status: TaskStatus.success,
-          tasks: tasks,
-          filteredTasks: filteredTasks,
-        ));
+      final filteredTasks =
+          tasks.where((e) => e.category == event.category).toList();
+      filteredTasks.sort((a, b) => a.startTime.compareTo(b.startTime));
+      emit(state.copyWith(
+        status: TaskStatus.success,
+        tasks: tasks,
+        filteredTasks: filteredTasks,
+      ));
     } on Exception catch (e) {
       print(e.toString());
     }
@@ -64,7 +68,12 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     try {
       await taskRepository.completeTask(event.id!, event.isComplete!);
       final tasks = await taskRepository.fetchTasks();
-      final filteredTasks = tasks.where((e) => e.category == sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].name).toList();
+      final filteredTasks = tasks
+          .where((e) =>
+              e.category ==
+              sidebarBloc
+                  .state.categories[sidebarBloc.state.selectedIndex].name)
+          .toList();
       emit(state.copyWith(
         status: TaskStatus.success,
         tasks: tasks,
