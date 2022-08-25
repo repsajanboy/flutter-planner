@@ -1,1 +1,1 @@
-export './widget/main_screen.dart';
+export './widgets/main_screen.dart';

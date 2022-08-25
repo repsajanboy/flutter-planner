@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../presentation/splash/splash.dart';
-import '../presentation/create_task/create.dart';
+import '../presentation/tasks/create_task/create.dart';
 import '../presentation/main_screen/main.dart';
 
+import '../presentation/tasks/edit_task/edit.dart';
 import 'app_router_names.dart';
 
 class AppRouter {
@@ -15,6 +16,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const MainScreen());
       case RouteNames.createTask:
         return MaterialPageRoute(builder: (_) => const CreateTask());
+      case RouteNames.editTask:
+        return MaterialPageRoute(builder: (_) => const EditTask());
 
       default:
         return MaterialPageRoute(

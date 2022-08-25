@@ -24,11 +24,8 @@ class AppTextStyle {
     );
   }
 
-    TextStyle createTaskLabel() {
-    return const TextStyle(
-      fontSize: 16.0,
-      color: Colors.black38
-    );
+  TextStyle createTaskLabel() {
+    return const TextStyle(fontSize: 16.0, color: Colors.black38);
   }
 
   TextStyle taskNameHintStyle() {
@@ -67,6 +64,14 @@ class AppTextStyle {
     return const TextStyle(
       fontFamily: 'Nunito',
       color: Colors.white70,
+    );
+  }
+
+  TextStyle createUpdateButtonStyle() {
+    return const TextStyle(
+      fontFamily: 'Open Sans',
+      fontSize: 16.0,
+      letterSpacing: 1.5,
     );
   }
 }

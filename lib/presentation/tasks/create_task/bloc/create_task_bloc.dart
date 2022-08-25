@@ -2,9 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../../repositories/task_repository.dart';
-import '../../../data/tasks/post_task.dart';
-import '../../main_screen/sidebar/sidebar.dart';
+import '../../../../repositories/task_repository.dart';
+import '../../../../data/tasks/post_task.dart';
+import '../../../main_screen/sidebar/sidebar.dart';
 
 part 'create_task_event.dart';
 part 'create_task_state.dart';

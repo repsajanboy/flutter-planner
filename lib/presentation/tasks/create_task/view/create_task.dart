@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../routing/app_router_names.dart';
+import '../../../../routing/app_router_names.dart';
+import '../../../../utils/context_extension.dart';
 import '../create.dart';
-import 'widget/create_task_category.dart';
-import 'widget/create_task_date_picker.dart';
-import 'widget/create_task_name_form.dart';
-import 'widget/create_task_time_picker.dart';
+import 'widgets/create_task_category.dart';
+import 'widgets/create_task_date_picker.dart';
+import 'widgets/create_task_name_form.dart';
+import 'widgets/create_task_time_picker.dart';
 
 class CreateTask extends StatelessWidget {
   const CreateTask({Key? key}) : super(key: key);
@@ -74,11 +75,7 @@ class CreateTask extends StatelessWidget {
                           padding: const EdgeInsets.all(20.0),
                           child: Text(
                             'Create Task'.toUpperCase(),
-                            style: const TextStyle(
-                              fontFamily: 'Open Sans',
-                              fontSize: 16.0,
-                              letterSpacing: 1.5,
-                            ),
+                            style: context.typo.createUpdateButtonStyle(),
                           ),
                         ),
                       );

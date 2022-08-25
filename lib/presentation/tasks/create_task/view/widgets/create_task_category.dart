@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../utils/color_picker_items.dart';
+import '../../../../../utils/color_picker_items.dart';
+import '../../../../../utils/context_extension.dart';
 import '../../create.dart';
 import 'create_task_category_picker.dart';
 
@@ -66,12 +67,7 @@ class CreateTaskCategory extends StatelessWidget {
                     const SizedBox(width: 8.0),
                     Text(
                       state.category,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'Nunito',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
-                      ),
+                      style: context.typo.createTaskText(),
                     ),
                   ],
                 ),
