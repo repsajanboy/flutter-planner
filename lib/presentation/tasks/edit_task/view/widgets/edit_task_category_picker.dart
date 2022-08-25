@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../utils/color_picker_items.dart';
-import '../../../main_screen/sidebar/sidebar.dart';
-import '../../create.dart';
+import '../../../../../utils/color_picker_items.dart';
+import '../../../../main_screen/sidebar/sidebar.dart';
 
-class CreateTaskCategoryPicker extends StatelessWidget {
-  const CreateTaskCategoryPicker({Key? key}) : super(key: key);
+class EditTaskCategoryPicker extends StatelessWidget {
+  const EditTaskCategoryPicker({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +59,10 @@ class CreateTaskCategoryPicker extends StatelessWidget {
                 ),
               ),
               onTap: () {
-               BlocProvider.of<CreateTaskBloc>(context).add(CreateTaskCategoryChanged(
-                      category: bottomCategoriesItem[index].name,
-                      categoryTheme: bottomCategoriesItem[index].theme,
-                    ));
+              //  BlocProvider.of<CreateTaskBloc>(context).add(CreateTaskCategoryChanged(
+              //         category: bottomCategoriesItem[index].name,
+              //         categoryTheme: bottomCategoriesItem[index].theme,
+              //       ));
                 Navigator.of(context).pop();
               },
             ),

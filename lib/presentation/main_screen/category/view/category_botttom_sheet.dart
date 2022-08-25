@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../utils/context_extension.dart';
 import '../../../../repositories/category_repository.dart';
 import '../bloc/category_bloc.dart';
-import 'widget/color_picker.dart';
+import 'widgets/color_picker.dart';
 
 class CategoryBottomSheet extends StatelessWidget {
   const CategoryBottomSheet({Key? key}) : super(key: key);
