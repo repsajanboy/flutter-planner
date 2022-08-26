@@ -25,6 +25,7 @@ class EditTaskBloc extends Bloc<EditTaskEvent, EditTaskState> {
     on<EditTaskCategoryChanged>((event, emit) => emit(state.copyWith(
         category: event.category, categoryTheme: event.categoryTheme)));
     on<EditTaskSaved>(_updateTask);
+    on<DeleteTaskSelected>(_deleteTask);
   }
   final TaskRepository taskRepository;
   final SidebarBloc sidebarBloc;
@@ -79,6 +80,18 @@ class EditTaskBloc extends Bloc<EditTaskEvent, EditTaskState> {
 
     try {
       await taskRepository.updateTask(updateTask);
+      emit(state.copyWith(status: EditTaskStatus.success));
+    } on Exception catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> _deleteTask(
+    DeleteTaskSelected event,
+    Emitter<EditTaskState> emit,
+  ) async {
+    try{
+      await taskRepository.deleteTask(event.id!);
       emit(state.copyWith(status: EditTaskStatus.success));
     } on Exception catch (e) {
       print(e.toString());

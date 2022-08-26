@@ -21,6 +21,53 @@ class EditTask extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.delete_forever_rounded,
+              color: Colors.black87,
+              size: 32.0,
+            ),
+            onPressed: () {
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: Text(
+                    'Delete Task',
+                    style: context.typo.popUpTitleStyle(),
+                  ),
+                  content: Text(
+                    'Are you sure you want to delete this task?',
+                    style: context.typo.popUpContentStyle(),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'No'),
+                      child: Text(
+                        'No',
+                        style: context.typo.popUpButtonStyle(),
+                      ),
+                    ),
+                    BlocBuilder<EditTaskBloc, EditTaskState>(
+                      builder: (context, state) {
+                        return TextButton(
+                          onPressed: () {
+                            context.read<EditTaskBloc>().add(DeleteTaskSelected(id: state.id));
+                            Navigator.pop(context, 'Yes');
+                          },
+                          child: Text(
+                            'Yes',
+                            style: context.typo.popUpButtonStyle(),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          )
+        ],
       ),
       body: BlocListener<EditTaskBloc, EditTaskState>(
         listener: (context, state) {

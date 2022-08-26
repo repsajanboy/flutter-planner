@@ -36,4 +36,8 @@ class TaskRepository {
   Future<void> updateTask(PostTask task) async {
     await _firebaseApi.updateTask(task);
   }
+
+  Future<void> deleteTask(String id) async {
+    await _firebaseApi.deleteTask(id);
+  }
 }

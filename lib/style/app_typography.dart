@@ -74,4 +74,25 @@ class AppTextStyle {
       letterSpacing: 1.5,
     );
   }
+
+  TextStyle popUpTitleStyle() {
+    return const TextStyle(
+      fontFamily: 'Open Sans',
+      fontSize: 20.0,
+      fontWeight: FontWeight.bold,
+    );
+  }
+
+  TextStyle popUpContentStyle() {
+    return const TextStyle(
+      fontFamily: 'Nunito',
+    );
+  }
+
+  TextStyle popUpButtonStyle() {
+    return const TextStyle(
+      fontFamily: 'Nunito',
+      fontWeight: FontWeight.bold
+    );
+  }
 }

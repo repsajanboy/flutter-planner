@@ -31,6 +31,10 @@ class FirebaseApi {
     await tasksReference.child('${task.id}').update(task.toJson());
   }
 
+  Future<void> deleteTask(String id) async {
+    await tasksReference.child(id).remove();
+  }
+
   Future<dynamic> getCategories() async {
     final snapShot = await categoriesRef.get();
     if(snapShot.exists) {
