@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../utils/color_picker_items.dart';
 import '../../../../main_screen/sidebar/sidebar.dart';
+import '../../edit.dart';
 
 class EditTaskCategoryPicker extends StatelessWidget {
   const EditTaskCategoryPicker({Key? key}) : super(key: key);
@@ -59,10 +60,10 @@ class EditTaskCategoryPicker extends StatelessWidget {
                 ),
               ),
               onTap: () {
-              //  BlocProvider.of<CreateTaskBloc>(context).add(CreateTaskCategoryChanged(
-              //         category: bottomCategoriesItem[index].name,
-              //         categoryTheme: bottomCategoriesItem[index].theme,
-              //       ));
+               BlocProvider.of<EditTaskBloc>(context).add(EditTaskCategoryChanged(
+                      category: bottomCategoriesItem[index].name,
+                      categoryTheme: bottomCategoriesItem[index].theme,
+                    ));
                 Navigator.of(context).pop();
               },
             ),
