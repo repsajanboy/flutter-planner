@@ -32,4 +32,8 @@ class TaskRepository {
   Future<void> completeTask(String id, bool isComplete) async {
     await _firebaseApi.completeTask(id, isComplete);
   }
+
+  Future<void> updateTask(PostTask task) async {
+    await _firebaseApi.updateTask(task);
+  }
 }

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../data/tasks/task.dart';
 import '../../../routing/app_router_names.dart';
+import '../edit_task/edit.dart';
 import '../tasks.dart';
 import './widgets/tasks_list_header.dart';
 import '../../../utils/context_extension.dart';
@@ -44,6 +45,7 @@ class TasksList extends StatelessWidget {
   Widget _taskBody(BuildContext context, Task task) {
     return InkWell(
       onTap: (){
+        BlocProvider.of<EditTaskBloc>(context).add(EditTaskDataLoaded(task: task));
         Navigator.pushNamed(context, RouteNames.editTask);
       },
       child: Container(

@@ -27,6 +27,10 @@ class FirebaseApi {
     });
   }
 
+  Future<void> updateTask(PostTask task) async {
+    await tasksReference.child('${task.id}').update(task.toJson());
+  }
+
   Future<dynamic> getCategories() async {
     final snapShot = await categoriesRef.get();
     if(snapShot.exists) {

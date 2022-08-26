@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import './routing/app_router.dart';
 import './repositories/task_repository.dart';
+import 'presentation/tasks/edit_task/edit.dart';
 import 'presentation/theme/theme.dart';
 import 'repositories/category_repository.dart';
 import './presentation/main_screen/sidebar/sidebar.dart';
@@ -10,8 +11,7 @@ import './presentation/tasks/create_task/create.dart';
 
 class MyApp extends StatelessWidget {
   final AppRouter router;
-  const MyApp({Key? key, required this.router})
-      : super(key: key);
+  const MyApp({Key? key, required this.router}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +40,12 @@ class MyApp extends StatelessWidget {
               taskRepository: context.read<TaskRepository>(),
               sidebarBloc: BlocProvider.of<SidebarBloc>(context),
             )..add(CreateTaskCategoryIndexLoaded()),
+          ),
+          BlocProvider(
+            create: (context) => EditTaskBloc(
+              taskRepository: context.read<TaskRepository>(),
+              sidebarBloc: BlocProvider.of<SidebarBloc>(context),
+            ),
           ),
         ],
         child: BlocBuilder<ThemeBloc, ThemeState>(
