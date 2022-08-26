@@ -39,4 +39,11 @@ class EditTaskCategoryChanged extends EditTaskEvent {
   EditTaskCategoryChanged({required this.category, required this.categoryTheme});
 }
 
+class DeleteTaskSelected extends EditTaskEvent {
+  final String? id;
+
+  DeleteTaskSelected({required this.id});
+
+}
+
 class EditTaskSaved extends EditTaskEvent {}
