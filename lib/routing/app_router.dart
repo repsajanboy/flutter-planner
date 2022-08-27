@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../presentation/main_screen/edit_category/edit.dart';
 import '../presentation/splash/splash.dart';
 import '../presentation/tasks/create_task/create.dart';
 import '../presentation/main_screen/main.dart';
@@ -18,6 +19,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const CreateTask());
       case RouteNames.editTask:
         return MaterialPageRoute(builder: (_) => const EditTask());
+      case RouteNames.editCategory:
+        return MaterialPageRoute(builder: (_) => const EditCategoryList());
 
       default:
         return MaterialPageRoute(

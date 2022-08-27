@@ -45,4 +45,8 @@ class FirebaseApi {
   Future<void> postCategory(PostCategory postCategory) async {
     await categoriesRef.push().set(postCategory.toJson());
   }
+
+  Future<void> updateCategory(PostCategory category) async {
+    await categoriesRef.child('${category.id}').update(category.toJson());
+  }
 }

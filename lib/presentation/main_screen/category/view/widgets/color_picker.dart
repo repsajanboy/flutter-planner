@@ -31,11 +31,10 @@ class ColorPicker extends StatelessWidget {
                       .add(CategoryColorChanged(index: index));
                 },
                 child: Container(
-                  width: 50,
-                  height: 50,
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: colorPickerItems[index].colors),
+                    shape: BoxShape.circle,
+                    color: colorPickerItems[index].colors,
+                  ),
                   child: Icon(
                     Icons.check_rounded,
                     size: 45.0,
