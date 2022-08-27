@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import './routing/app_router.dart';
 import './repositories/task_repository.dart';
+import 'presentation/main_screen/edit_category/edit.dart';
 import 'presentation/tasks/edit_task/edit.dart';
 import 'presentation/theme/theme.dart';
 import 'repositories/category_repository.dart';
@@ -30,6 +31,10 @@ class MyApp extends StatelessWidget {
             create: (context) => SidebarBloc(
                 categoryRepository: context.read<CategoryRepository>())
               ..add(CategoriesFetched()),
+          ),
+          BlocProvider(
+            create: (context) => EditCategoryBloc(
+                categoryRepository: context.read<CategoryRepository>())
           ),
           BlocProvider(
             create: (context) =>

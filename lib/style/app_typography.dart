@@ -92,7 +92,33 @@ class AppTextStyle {
   TextStyle popUpButtonStyle() {
     return const TextStyle(
       fontFamily: 'Nunito',
-      fontWeight: FontWeight.bold
+      fontWeight: FontWeight.bold,
+    );
+  }
+
+  TextStyle editCategoryTitleAppBarStyle() {
+    return const TextStyle(
+      fontFamily: 'Open Sans',
+      color: Colors.white,
+      fontSize: 18.0,
+    );
+  }
+
+  TextStyle categoryListTitleStyle() {
+    return const TextStyle(
+      color: Colors.white70,
+      fontFamily: 'Nunito',
+      fontWeight: FontWeight.bold,
+      fontSize: 16.0,
+    );
+  }
+
+  TextStyle createUpdateCategoryLabelStyle() {
+    return const TextStyle(
+      fontFamily: 'Open Sans',
+      fontSize: 20.0,
+      color: Colors.white70,
+      fontWeight: FontWeight.normal,
     );
   }
 }

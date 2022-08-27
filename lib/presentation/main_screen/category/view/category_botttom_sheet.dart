@@ -32,7 +32,15 @@ class CategoryBottomSheet extends StatelessWidget {
           ),
           height: MediaQuery.of(context).size.height * .48,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(
+                'New category',
+                style: context.typo.createUpdateCategoryLabelStyle(),
+              ),
+              const SizedBox(
+                height: 5.0,
+              ),
               BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
                   return TextFormField(
@@ -57,13 +65,13 @@ class CategoryBottomSheet extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                height: 25.0,
+                height: 12.0,
               ),
               const Expanded(
                 child: ColorPicker(),
               ),
               const SizedBox(
-                height: 25.0,
+                height: 20.0,
               ),
               BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
@@ -75,7 +83,10 @@ class CategoryBottomSheet extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).pop;
                           },
-                          child: Text('Cancel'.toUpperCase()),
+                          child: Text(
+                            'Cancel'.toUpperCase(),
+                            style: context.typo.popUpButtonStyle(),
+                          ),
                         ),
                         const VerticalDivider(
                           color: Colors.white24,
@@ -88,7 +99,10 @@ class CategoryBottomSheet extends StatelessWidget {
                                 .add(CreateCategorySaved());
                             Navigator.of(context).pop();
                           },
-                          child: Text('Save'.toUpperCase()),
+                          child: Text(
+                            'Save'.toUpperCase(),
+                            style: context.typo.popUpButtonStyle(),
+                          ),
                         ),
                       ],
                     ),
@@ -99,6 +113,6 @@ class CategoryBottomSheet extends StatelessWidget {
           ),
         ),
       ),
-    ); 
+    );
   }
 }

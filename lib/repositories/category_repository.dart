@@ -23,4 +23,8 @@ class CategoryRepository{
     });
     return fetchCategories;
   }
+
+  Future<void> updateCategory(PostCategory category) async {
+    await _firebaseApi.updateCategory(category);
+  }
 }
