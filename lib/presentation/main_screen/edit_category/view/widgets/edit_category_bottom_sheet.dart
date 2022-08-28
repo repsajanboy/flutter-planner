@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../utils/context_extension.dart';
+import '../../../sidebar/bloc/sidebar_bloc.dart';
 import '../../edit.dart';
 import 'edit_category_color_picker.dart';
 
@@ -36,40 +37,46 @@ class EditCategoryBottomSheet extends StatelessWidget {
                   'Edit category',
                   style: context.typo.createUpdateCategoryLabelStyle(),
                 ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.delete_forever_rounded,
-                    color: Colors.white70,
-                    size: 32.0,
-                  ),
-                  onPressed: () {},
+                BlocBuilder<EditCategoryBloc, EditCategoryState>(
+                  builder: (context, state) {
+                    return IconButton(
+                      icon: const Icon(
+                        Icons.delete_forever_rounded,
+                        color: Colors.white70,
+                        size: 32.0,
+                      ),
+                      onPressed: () {
+                        context.read<EditCategoryBloc>().add(DeleteCategorySelected(id: state.id));
+                        BlocProvider.of<SidebarBloc>(context).add(CategoriesFetched());
+                        Navigator.pop(context);
+                      },
+                    );
+                  },
                 ),
               ],
             ),
             BlocBuilder<EditCategoryBloc, EditCategoryState>(
               builder: (context, state) {
-                if (state is EditSingleCategoryState) {
-                  return TextFormField(
-                    cursorColor: Colors.white70,
-                    initialValue: state.name,
-                    style: context.typo.categoryNameTextStyle(),
-                    decoration: InputDecoration(
-                      hintText: 'Category Name',
-                      hintStyle: context.typo.categoryNameHintStyle(),
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white70),
-                      ),
-                      enabledBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white70),
-                      ),
+                return TextFormField(
+                  cursorColor: Colors.white70,
+                  initialValue: state.name,
+                  style: context.typo.categoryNameTextStyle(),
+                  decoration: InputDecoration(
+                    hintText: 'Category Name',
+                    hintStyle: context.typo.categoryNameHintStyle(),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white70),
                     ),
-                    onChanged: (value) {
-                      context.read<EditCategoryBloc>().add(EditCategoryNameChanged(name: value));
-                    },
-                  );
-                } else {
-                  return const SizedBox();
-                }
+                    enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white70),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    context
+                        .read<EditCategoryBloc>()
+                        .add(EditCategoryNameChanged(name: value));
+                  },
+                );
               },
             ),
             const SizedBox(
@@ -86,7 +93,7 @@ class EditCategoryBottomSheet extends StatelessWidget {
                     children: [
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).pop;
+                          Navigator.pop(context, 'Cancel');
                         },
                         child: Text(
                           'Cancel'.toUpperCase(),
@@ -99,7 +106,10 @@ class EditCategoryBottomSheet extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () async {
-                          context.read<EditCategoryBloc>().add(const EditCategorySaved());
+                          context
+                              .read<EditCategoryBloc>()
+                              .add(EditCategorySaved());
+                          BlocProvider.of<SidebarBloc>(context).add(CategoriesFetched());
                           Navigator.of(context).pop();
                         },
                         child: Text(

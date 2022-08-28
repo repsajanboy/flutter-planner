@@ -49,4 +49,8 @@ class FirebaseApi {
   Future<void> updateCategory(PostCategory category) async {
     await categoriesRef.child('${category.id}').update(category.toJson());
   }
+
+  Future<void> deleteCategory(String id) async {
+    await categoriesRef.child(id).remove();
+  }
 }

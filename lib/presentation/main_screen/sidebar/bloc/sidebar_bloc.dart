@@ -30,6 +30,13 @@ class SidebarBloc extends Bloc<SidebarEvent, SidebarState> {
           categories: categories,
           selectedCategoryName: categories[0].name,
         ));
+      } else if(state.status == SideBarStatus.success){
+        final categories = await categoryRepository.fetchCategories();
+        emit(state.copyWith(
+          status: SideBarStatus.success,
+          categories: categories,
+          selectedCategoryName: categories[0].name,
+        ));
       }
     } on Exception catch (e) {
       print(e.toString());
