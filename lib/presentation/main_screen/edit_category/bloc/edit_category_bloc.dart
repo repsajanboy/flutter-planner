@@ -10,12 +10,15 @@ part 'edit_category_state.dart';
 
 class EditCategoryBloc extends Bloc<EditCategoryEvent, EditCategoryState> {
   EditCategoryBloc({required this.categoryRepository})
-      : super(EditCategoryInitial()) {
+      : super(const EditCategoryState()) {
     on<EditCategoryListLoaded>(_editCategoryListData);
     on<EditCategoryDataLoaded>(_editCategoryDataLoaded);
-    on<EditCategoryColorChanged>(_editCategoryColorChange);
-    on<EditCategoryNameChanged>(_editCategorNameChange);
+    on<EditCategoryColorChanged>(
+        (event, emit) => emit(state.copyWith(theme: event.index)));
+    on<EditCategoryNameChanged>(
+        (event, emit) => emit(state.copyWith(name: event.name)));
     on<EditCategorySaved>(_editCategorySaved);
+    on<DeleteCategorySelected>(_deleteCategorySelected);
   }
 
   final CategoryRepository categoryRepository;
@@ -26,7 +29,7 @@ class EditCategoryBloc extends Bloc<EditCategoryEvent, EditCategoryState> {
   ) async {
     try {
       final categories = await categoryRepository.fetchCategories();
-      emit(EditCategoryListState(categories: categories));
+      emit(state.copyWith(categories: categories));
     } on Exception catch (e) {
       print(e.toString());
     }
@@ -36,25 +39,11 @@ class EditCategoryBloc extends Bloc<EditCategoryEvent, EditCategoryState> {
     EditCategoryDataLoaded event,
     Emitter<EditCategoryState> emit,
   ) async {
-    emit(EditSingleCategoryState(
+    emit(state.copyWith(
       id: event.category.id,
       name: event.category.name,
       theme: event.category.theme,
     ));
-  }
-
-  Future<void> _editCategoryColorChange(
-    EditCategoryColorChanged event,
-    Emitter<EditCategoryState> emit,
-  ) async {
-    emit(EditSingleCategoryState().copyWith(theme: event.index));
-  }
-
-  Future<void> _editCategorNameChange(
-    EditCategoryNameChanged event,
-    Emitter<EditCategoryState> emit,
-  ) async {
-    emit(EditSingleCategoryState().copyWith(name: event.name));
   }
 
   Future<void> _editCategorySaved(
@@ -62,15 +51,22 @@ class EditCategoryBloc extends Bloc<EditCategoryEvent, EditCategoryState> {
     Emitter<EditCategoryState> emit,
   ) async {
     try {
-      var categoryState =  const EditSingleCategoryState();
-      final updateCategory = PostCategory(
-        id: categoryState.id,
-        name: categoryState.name,
-        theme: categoryState.theme
-      );
+      final updateCategory =
+          PostCategory(id: state.id, name: state.name, theme: state.theme);
       await categoryRepository.updateCategory(updateCategory);
+      final categories = await categoryRepository.fetchCategories();
+      emit(state.copyWith(categories: categories));
     } on Exception catch (e) {
       print(e.toString());
     }
+  }
+
+  Future<void> _deleteCategorySelected(
+    DeleteCategorySelected event,
+    Emitter<EditCategoryState> emit,
+  ) async {
+    await categoryRepository.deleteCategory(event.id!);
+    final categories = await categoryRepository.fetchCategories();
+    emit(state.copyWith(categories: categories));
   }
 }

@@ -37,23 +37,20 @@ class EditCategoryList extends StatelessWidget {
             Expanded(
               child: BlocBuilder<EditCategoryBloc, EditCategoryState>(
                 builder: (context, state) {
-                  if (state is EditCategoryListState) {
-                    return ListView.separated(
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        separatorBuilder: (BuildContext context, int index) =>
-                            const Divider(height: 2, color: Colors.white54),
-                        itemCount: state.categories.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return _categoriesItem(
-                            context,
-                            state.categories[index],
-                            index,
-                          );
-                        });
-                  } else {
-                    return const SizedBox();
-                  }
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const Divider(height: 2, color: Colors.white54),
+                    itemCount: state.categories.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return _categoriesItem(
+                        context,
+                        state.categories[index],
+                        index,
+                      );
+                    },
+                  );
                 },
               ),
             )
@@ -102,7 +99,8 @@ class EditCategoryList extends StatelessWidget {
         ),
         trailing: IconButton(
             onPressed: () {
-              BlocProvider.of<EditCategoryBloc>(context).add(EditCategoryDataLoaded(category: category));
+              BlocProvider.of<EditCategoryBloc>(context)
+                  .add(EditCategoryDataLoaded(category: category));
               showModalBottomSheet<void>(
                 context: context,
                 isScrollControlled: true,

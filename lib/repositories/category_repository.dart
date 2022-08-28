@@ -27,4 +27,8 @@ class CategoryRepository{
   Future<void> updateCategory(PostCategory category) async {
     await _firebaseApi.updateCategory(category);
   }
+
+  Future<void> deleteCategory(String id) async {
+    await _firebaseApi.deleteCategory(id);
+  }
 }

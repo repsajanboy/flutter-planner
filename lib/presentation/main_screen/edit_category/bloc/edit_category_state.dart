@@ -1,46 +1,34 @@
 part of 'edit_category_bloc.dart';
 
-abstract class EditCategoryState extends Equatable {
-  const EditCategoryState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class EditCategoryInitial extends EditCategoryState {}
-
-class EditCategoryListState extends EditCategoryState {
+class EditCategoryState extends Equatable {
   final List<Category> categories;
-
-  const EditCategoryListState({required this.categories});
-
-  @override
-  List<Object> get props => [categories];
-}
-
-class EditSingleCategoryState extends EditCategoryState {
   final String id;
   final String name;
   final int theme;
 
-  const EditSingleCategoryState({
+  const EditCategoryState({
+    this.categories = const <Category>[],
     this.id = '',
     this.name = '',
     this.theme = 0,
   });
 
-  EditSingleCategoryState copyWith({
+  EditCategoryState copyWith({
+    List<Category>? categories,
     String? id,
     String? name,
     int? theme,
   }) {
-    return EditSingleCategoryState(
+    return EditCategoryState(
+      categories: categories ?? this.categories,
       id: id ?? this.id,
       name: name ?? this.name,
-      theme: theme ?? this.theme
+      theme: theme ?? this.theme,
     );
   }
 
   @override
-  List<Object> get props => [id, name, theme];
+  List<Object> get props => [categories, id, name, theme];
 }
+
+class EditCategoryInitial extends EditCategoryState {}

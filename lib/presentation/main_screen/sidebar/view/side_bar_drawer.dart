@@ -11,7 +11,6 @@ import '../../category/category.dart';
 import '../../edit_category/edit.dart';
 import '../sidebar.dart';
 
-
 class SideBarDrawer extends StatelessWidget {
   const SideBarDrawer({Key? key}) : super(key: key);
 
@@ -85,49 +84,49 @@ class SideBarDrawer extends StatelessWidget {
                                 top: Radius.circular(30.0))),
                         builder: (BuildContext context) =>
                             const CategoryBottomSheet(),
-                      );
+                      ).whenComplete(() {
+                        BlocProvider.of<SidebarBloc>(context).add(CategoriesFetched());
+                      });
                     },
                   ),
                 ],
               ),
             ),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 15.0),
-                  child: ListTile(
-                    leading: Card(
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                      elevation: 5.0,
-                      color: Colors.grey[800],
-                      child: const SizedBox(
-                        width: 50.0,
-                        height: 50.0,
-                        child: Center(
-                          child: Icon(
-                            Icons.settings_outlined,
-                            color: Colors.white70,
-                          ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 15.0),
+                child: ListTile(
+                  leading: Card(
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                    elevation: 5.0,
+                    color: Colors.grey[800],
+                    child: const SizedBox(
+                      width: 50.0,
+                      height: 50.0,
+                      child: Center(
+                        child: Icon(
+                          Icons.settings_outlined,
+                          color: Colors.white70,
                         ),
                       ),
                     ),
-                    title: const Text(
-                      'Manage',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontFamily: 'Nunito',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
-                      ),
-                    ),
-                    onTap: () {
-                      BlocProvider.of<EditCategoryBloc>(context)
-                          .add(const EditCategoryListLoaded());
-                      Navigator.pushNamed(context, RouteNames.editCategory);
-                    },
                   ),
+                  title: const Text(
+                    'Manage',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                  onTap: () {
+                    BlocProvider.of<EditCategoryBloc>(context)
+                        .add(EditCategoryListLoaded());
+                    Navigator.pushNamed(context, RouteNames.editCategory);
+                  },
                 ),
               ),
             ),

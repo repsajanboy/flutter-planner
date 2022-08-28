@@ -22,30 +22,28 @@ class EditCategoryColorPicker extends StatelessWidget {
         itemBuilder: (context, index) {
           return BlocBuilder<EditCategoryBloc, EditCategoryState>(
             builder: (context, state) {
-              if (state is EditSingleCategoryState) {
-                final currentIndex = colorPickerItems
-                    .indexWhere((e) => e.id == state.theme);
-                return InkWell(
-                  onTap: () {
-                    context.read<EditCategoryBloc>().add(EditCategoryColorChanged(index: index));
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: colorPickerItems[index].colors,
-                    ),
-                    child: Icon(
-                      Icons.check_rounded,
-                      size: 45.0,
-                      color: currentIndex == index
-                          ? Colors.white
-                          : colorPickerItems[index].colors,
-                    ),
+              final currentIndex =
+                  colorPickerItems.indexWhere((e) => e.id == state.theme);
+              return InkWell(
+                onTap: () {
+                  context
+                      .read<EditCategoryBloc>()
+                      .add(EditCategoryColorChanged(index: index));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: colorPickerItems[index].colors,
                   ),
-                );
-              } else {
-                return const SizedBox();
-              }
+                  child: Icon(
+                    Icons.check_rounded,
+                    size: 45.0,
+                    color: currentIndex == index
+                        ? Colors.white
+                        : colorPickerItems[index].colors,
+                  ),
+                ),
+              );
             },
           );
         },

@@ -1,46 +1,34 @@
 part of 'edit_category_bloc.dart';
 
-abstract class EditCategoryEvent extends Equatable {
-  const EditCategoryEvent();
-}
+abstract class EditCategoryEvent {}
 
 class EditCategoryListLoaded extends EditCategoryEvent {
-  const EditCategoryListLoaded();
-
-  @override
-  List<Object> get props => [];
+  EditCategoryListLoaded();
 }
 
 class EditCategoryDataLoaded extends EditCategoryEvent {
   final Category category;
 
-  const EditCategoryDataLoaded({required this.category});
-
-  @override
-  List<Object> get props => [category];
+  EditCategoryDataLoaded({required this.category});
 }
 
 class EditCategoryColorChanged extends EditCategoryEvent {
   final int? index;
 
-  const EditCategoryColorChanged({required this.index});
-
-  @override
-  List<Object> get props => [index!];
+  EditCategoryColorChanged({required this.index});
 }
 
 class EditCategoryNameChanged extends EditCategoryEvent {
   final String? name;
 
-  const EditCategoryNameChanged({required this.name});
-
-  @override
-  List<Object> get props => [name!];
+  EditCategoryNameChanged({required this.name});
 }
 
 class EditCategorySaved extends EditCategoryEvent {
-  const EditCategorySaved();
+  EditCategorySaved();
+}
 
-  @override
-  List<Object> get props => [];
+class DeleteCategorySelected extends EditCategoryEvent {
+  final String? id;
+  DeleteCategorySelected({this.id});
 }
