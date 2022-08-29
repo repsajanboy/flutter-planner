@@ -45,7 +45,7 @@ class EditTaskState extends Equatable {
         title: title ?? this.title,
         taskDate: taskDate ?? this.taskDate,
         startTime: startTime ?? this.startTime,
-        endTime: endTime ?? this.startTime,
+        endTime: endTime ?? this.endTime,
         category: category ?? this.category,
         categoryId: categoryId ?? this.categoryId,
         isComplete: isComplete ?? this.isComplete,

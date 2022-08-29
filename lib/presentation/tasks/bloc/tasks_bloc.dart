@@ -28,7 +28,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       if (state.status == TaskStatus.initial) {
         final tasks = await taskRepository.fetchTasks();
         final filteredTasks = tasks
-            .where((e) => e.categoryId == sidebarBloc.state.categories[0].id)
+            .where((e) => e.categoryId == sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].id)
             .toList();
         filteredTasks.sort((a, b) => a.startTime.compareTo(b.startTime));
         emit(state.copyWith(
