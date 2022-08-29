@@ -22,6 +22,7 @@ class TaskRepository {
             startTime: DateTime.parse(value['startTime'] as String),
             endTime: DateTime.parse(value['endTime'] as String),
             category: value['category'] as String,
+            categoryId: value['categoryId'] as String,
             isComplete: value['isComplete'] as bool));
       });
     }

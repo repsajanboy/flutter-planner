@@ -23,7 +23,7 @@ class EditTaskBloc extends Bloc<EditTaskEvent, EditTaskState> {
     on<EditTaskEndTimeChanged>(
         (event, emit) => emit(state.copyWith(endTime: event.endTime)));
     on<EditTaskCategoryChanged>((event, emit) => emit(state.copyWith(
-        category: event.category, categoryTheme: event.categoryTheme)));
+        category: event.category, categoryId: event.categoryId, categoryTheme: event.categoryTheme)));
     on<EditTaskSaved>(_updateTask);
     on<DeleteTaskSelected>(_deleteTask);
   }
@@ -41,7 +41,7 @@ class EditTaskBloc extends Bloc<EditTaskEvent, EditTaskState> {
         taskDate: event.task.taskDate,
         startTime: TimeOfDay.fromDateTime(event.task.startTime),
         endTime: TimeOfDay.fromDateTime(event.task.endTime),
-        category: event.task.category,
+        category: sidebarBloc.state.categories.firstWhere((e) => e.id == event.task.categoryId).name,
         isComplete: event.task.isComplete,
         status: EditTaskStatus.initial,
         categoryTheme:
@@ -75,6 +75,7 @@ class EditTaskBloc extends Bloc<EditTaskEvent, EditTaskState> {
       startTime: _startTime,
       endTime: _endTime,
       category: state.category,
+      categoryId: state.categoryId,
       isComplete: state.isComplete,
     );
 

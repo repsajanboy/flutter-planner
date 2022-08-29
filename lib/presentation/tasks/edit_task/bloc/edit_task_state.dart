@@ -9,6 +9,7 @@ class EditTaskState extends Equatable {
   final TimeOfDay startTime;
   final TimeOfDay endTime;
   final String category;
+  final String categoryId;
   final bool isComplete;
   final EditTaskStatus status;
   final int categoryTheme;
@@ -19,6 +20,7 @@ class EditTaskState extends Equatable {
     TimeOfDay? startTime,
     TimeOfDay? endTime,
     this.category = '',
+    this.categoryId = '',
     this.isComplete = false,
     this.status = EditTaskStatus.initial,
     this.categoryTheme = 0,
@@ -33,6 +35,7 @@ class EditTaskState extends Equatable {
     TimeOfDay? startTime,
     TimeOfDay? endTime,
     String? category,
+    String? categoryId,
     bool? isComplete,
     EditTaskStatus? status,
     int? categoryTheme,
@@ -44,6 +47,7 @@ class EditTaskState extends Equatable {
         startTime: startTime ?? this.startTime,
         endTime: endTime ?? this.startTime,
         category: category ?? this.category,
+        categoryId: categoryId ?? this.categoryId,
         isComplete: isComplete ?? this.isComplete,
         status: status ?? this.status,
         categoryTheme: categoryTheme ?? this.categoryTheme);
@@ -57,6 +61,7 @@ class EditTaskState extends Equatable {
         startTime,
         endTime,
         category,
+        categoryId,
         isComplete,
         status,
         categoryTheme,

@@ -62,6 +62,7 @@ class EditTaskCategoryPicker extends StatelessWidget {
               onTap: () {
                BlocProvider.of<EditTaskBloc>(context).add(EditTaskCategoryChanged(
                       category: bottomCategoriesItem[index].name,
+                      categoryId: bottomCategoriesItem[index].id,
                       categoryTheme: bottomCategoriesItem[index].theme,
                     ));
                 Navigator.of(context).pop();

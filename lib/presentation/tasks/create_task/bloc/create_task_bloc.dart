@@ -21,10 +21,11 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
     on<CreateTaskEndTimeChanged>(
         (event, emit) => emit(state.copyWith(endTime: event.endTime)));
     on<CreateTaskCategoryChanged>(
-        (event, emit) => emit(state.copyWith(category: event.category, categoryTheme: event.categoryTheme)));
+        (event, emit) => emit(state.copyWith(category: event.category, categoryId: event.categoryId, categoryTheme: event.categoryTheme)));
     on<CreateTaskCategoryIndexLoaded>(
       (event, emit) => emit(state.copyWith(
         category: sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].name,
+        categoryId: sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].id,
         categoryTheme: sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].theme,
         isCategoryLoaded: true,
       )),
@@ -59,6 +60,7 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
         startTime: _startTime,
         endTime: _endTime,
         category: state.category,
+        categoryId: state.categoryId,
         isComplete: state.isComplete);
     try {
       await taskRepository.postTask(postTask);

@@ -6,6 +6,7 @@ class Task {
     required this.startTime,
     required this.endTime,
     required this.category,
+    required this.categoryId,
     required this.isComplete,
   });
 
@@ -15,6 +16,7 @@ class Task {
   DateTime startTime;
   DateTime endTime;
   String category;
+  String categoryId;
   bool isComplete;
 
   factory Task.fromJson(Map<String, dynamic> json) => Task(
@@ -24,6 +26,7 @@ class Task {
         startTime: json["startTime"],
         endTime: json["endTime"],
         category: json['category'],
+        categoryId: json['categoryId'],
         isComplete: json["isComplete"],
       );
 
@@ -34,6 +37,7 @@ class Task {
         "startTime": startTime,
         "endTime": endTime,
         "category": category,
+        "categoryId": categoryId,
         "isComplete": isComplete
       };
 }

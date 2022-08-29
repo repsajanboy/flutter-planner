@@ -34,9 +34,10 @@ class EditTaskEndTimeChanged extends EditTaskEvent {
 
 class EditTaskCategoryChanged extends EditTaskEvent {
   final String? category;
+  final String? categoryId;
   final int? categoryTheme;
 
-  EditTaskCategoryChanged({required this.category, required this.categoryTheme});
+  EditTaskCategoryChanged({required this.category, required this.categoryId, required this.categoryTheme});
 }
 
 class DeleteTaskSelected extends EditTaskEvent {

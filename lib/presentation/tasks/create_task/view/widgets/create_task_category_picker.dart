@@ -62,6 +62,7 @@ class CreateTaskCategoryPicker extends StatelessWidget {
               onTap: () {
                BlocProvider.of<CreateTaskBloc>(context).add(CreateTaskCategoryChanged(
                       category: bottomCategoriesItem[index].name,
+                      categoryId: bottomCategoriesItem[index].id,
                       categoryTheme: bottomCategoriesItem[index].theme,
                     ));
                 Navigator.of(context).pop();
