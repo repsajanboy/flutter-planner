@@ -14,7 +14,7 @@ class TaskCompleteChanged extends TasksEvent {
 }
 
 class TasksListFiltered extends TasksEvent {
-  final String category;
+  final String categoryId;
 
-  TasksListFiltered({required this.category});
+  TasksListFiltered({required this.categoryId});
 }

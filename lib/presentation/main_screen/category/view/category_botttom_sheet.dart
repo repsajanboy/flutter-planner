@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../utils/context_extension.dart';
 import '../../../../repositories/category_repository.dart';
-import '../../sidebar/sidebar.dart';
 import '../bloc/category_bloc.dart';
 import 'widgets/color_picker.dart';
 

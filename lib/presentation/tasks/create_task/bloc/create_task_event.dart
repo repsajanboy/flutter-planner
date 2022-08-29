@@ -29,8 +29,9 @@ class CreateTaskEndTimeChanged extends CreateTaskEvent {
 
 class CreateTaskCategoryChanged extends CreateTaskEvent {
   final String? category;
+  final String? categoryId;
   final int? categoryTheme;
-  CreateTaskCategoryChanged({required this.category, required this.categoryTheme});
+  CreateTaskCategoryChanged({required this.category, required this.categoryId, required this.categoryTheme});
 }
 
 class CreateTaskCategoryIndexLoaded extends CreateTaskEvent {}

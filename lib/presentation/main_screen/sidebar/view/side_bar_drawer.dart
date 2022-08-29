@@ -186,7 +186,7 @@ class SideBarDrawer extends StatelessWidget {
           BlocProvider.of<SidebarBloc>(context)
               .add(CategoriesNameSelected(selectedCategoryName: category.name));
           BlocProvider.of<TasksBloc>(context)
-              .add(TasksListFiltered(category: category.name));
+              .add(TasksListFiltered(categoryId: category.id));
         },
       ),
     );

@@ -28,7 +28,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       if (state.status == TaskStatus.initial) {
         final tasks = await taskRepository.fetchTasks();
         final filteredTasks = tasks
-            .where((e) => e.category == sidebarBloc.state.categories[0].name)
+            .where((e) => e.categoryId == sidebarBloc.state.categories[0].id)
             .toList();
         filteredTasks.sort((a, b) => a.startTime.compareTo(b.startTime));
         emit(state.copyWith(
@@ -49,7 +49,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       emit(state.copyWith(filteredTasks: []));
       final tasks = await taskRepository.fetchTasks();
       final filteredTasks =
-          tasks.where((e) => e.category == event.category).toList();
+          tasks.where((e) => e.categoryId == event.categoryId).toList();
       filteredTasks.sort((a, b) => a.startTime.compareTo(b.startTime));
       emit(state.copyWith(
         status: TaskStatus.success,
@@ -70,9 +70,9 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       final tasks = await taskRepository.fetchTasks();
       final filteredTasks = tasks
           .where((e) =>
-              e.category ==
+              e.categoryId ==
               sidebarBloc
-                  .state.categories[sidebarBloc.state.selectedIndex].name)
+                  .state.categories[sidebarBloc.state.selectedIndex].id)
           .toList();
       emit(state.copyWith(
         status: TaskStatus.success,

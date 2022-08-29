@@ -6,6 +6,7 @@ class PostTask {
     this.startTime,
     this.endTime,
     this.category,
+    this.categoryId,
     this.isComplete,
   });
 
@@ -15,6 +16,7 @@ class PostTask {
   DateTime? startTime;
   DateTime? endTime;
   String? category;
+  String? categoryId;
   bool? isComplete;
 
   Map<String, dynamic> toJson() => {
@@ -24,6 +26,7 @@ class PostTask {
         "startTime": startTime!.toIso8601String(),
         "endTime": endTime!.toIso8601String(),
         "category": category,
+        "categoryId": categoryId,
         "isComplete": isComplete
       };
 }

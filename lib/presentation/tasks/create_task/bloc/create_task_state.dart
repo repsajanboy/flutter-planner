@@ -9,6 +9,7 @@ class CreateTaskState extends Equatable {
   final TimeOfDay startTime;
   final TimeOfDay endTime;
   final String category;
+  final String categoryId;
   final bool isComplete;
   final CreateTaskStatus status;
   final bool isCategoryLoaded;
@@ -20,6 +21,7 @@ class CreateTaskState extends Equatable {
     TimeOfDay? startTime,
     TimeOfDay? endTime,
     this.category = '',
+    this.categoryId = '',
     this.isComplete = false,
     this.status = CreateTaskStatus.initial,
     this.isCategoryLoaded = false,
@@ -35,6 +37,7 @@ class CreateTaskState extends Equatable {
     TimeOfDay? startTime,
     TimeOfDay? endTime,
     String? category,
+    String? categoryId,
     bool? isComplete,
     CreateTaskStatus? status,
     bool? isCategoryLoaded,
@@ -47,6 +50,7 @@ class CreateTaskState extends Equatable {
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
       category: category ?? this.category,
+      categoryId: categoryId ?? this.categoryId,
       isComplete: isComplete ?? this.isComplete,
       status: status ?? this.status,
       isCategoryLoaded: isCategoryLoaded ?? this.isCategoryLoaded,
@@ -55,6 +59,16 @@ class CreateTaskState extends Equatable {
   }
 
   @override
-  List<Object> get props =>
-      [id, title, taskDate, startTime, endTime, category, isComplete, status, isCategoryLoaded];
+  List<Object> get props => [
+        id,
+        title,
+        taskDate,
+        startTime,
+        endTime,
+        category,
+        categoryId,
+        isComplete,
+        status,
+        isCategoryLoaded
+      ];
 }
