@@ -28,7 +28,7 @@ class EditTaskTimePicker extends StatelessWidget {
                       onTap: () {
                         showTimePicker(
                           context: context,
-                          initialTime: TimeOfDay.now(),
+                          initialTime: state.startTime ,
                         ).then((time) {
                           context
                               .read<EditTaskBloc>()
@@ -76,7 +76,7 @@ class EditTaskTimePicker extends StatelessWidget {
                       onTap: () {
                         showTimePicker(
                           context: context,
-                          initialTime: TimeOfDay.now(),
+                          initialTime: state.endTime,
                         ).then((time) {
                           context
                               .read<EditTaskBloc>()

@@ -12,6 +12,7 @@ class EditTaskNameForm extends StatelessWidget {
     return BlocBuilder<EditTaskBloc, EditTaskState>(
       builder: (context, state) {
         return TextFormField(
+          autofocus: false,
           cursorColor: Colors.black,
           style: context.typo.taskNameStyle(),
           initialValue: state.title,

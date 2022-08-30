@@ -15,7 +15,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
         emit(ThemeState(themeData: appThemeData[event.theme] as ThemeData)));
     on<DefaultThemeLoaded>((event, emit) => emit(ThemeState(
           themeData: appThemeData[AppTheme
-              .values[sidebarBloc.state.categories[0].theme]] as ThemeData,
+              .values[sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].theme]] as ThemeData,
         )));
   }
 
