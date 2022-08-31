@@ -20,17 +20,24 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
         (event, emit) => emit(state.copyWith(startTime: event.startTime)));
     on<CreateTaskEndTimeChanged>(
         (event, emit) => emit(state.copyWith(endTime: event.endTime)));
-    on<CreateTaskCategoryChanged>(
-        (event, emit) => emit(state.copyWith(category: event.category, categoryId: event.categoryId, categoryTheme: event.categoryTheme)));
+    on<CreateTaskCategoryChanged>((event, emit) => emit(state.copyWith(
+        category: event.category,
+        categoryId: event.categoryId,
+        categoryTheme: event.categoryTheme)));
     on<CreateTaskCategoryIndexLoaded>(
       (event, emit) => emit(state.copyWith(
-        category: sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].name,
-        categoryId: sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].id,
-        categoryTheme: sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].theme,
+        category:
+            sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].name,
+        categoryId:
+            sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].id,
+        categoryTheme:
+            sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].theme,
         isCategoryLoaded: true,
       )),
     );
     on<CreateTaskSaved>(_postTask);
+    on<CreateTaskBackToInitial>(((event, emit) =>
+        emit(state.copyWith(status: CreateTaskStatus.initial))));
   }
 
   final TaskRepository taskRepository;

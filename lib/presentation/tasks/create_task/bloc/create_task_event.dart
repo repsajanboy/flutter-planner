@@ -37,3 +37,5 @@ class CreateTaskCategoryChanged extends CreateTaskEvent {
 class CreateTaskCategoryIndexLoaded extends CreateTaskEvent {}
 
 class CreateTaskSaved extends CreateTaskEvent {}
+
+class CreateTaskBackToInitial extends CreateTaskEvent {}
