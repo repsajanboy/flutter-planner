@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../repositories/task_repository.dart';
 import '../../../../routing/app_router_names.dart';
+import '../../../tasks/create_task/bloc/create_task_bloc.dart';
 import '../../sidebar/sidebar.dart';
 import '../../../tasks/tasks.dart';
 import '../../../../utils/context_extension.dart';
@@ -27,6 +28,18 @@ class MainScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(color: Colors.black),
           elevation: 0.0,
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.calendar_today_rounded,
+                color: Colors.black,
+                size: 32.0,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, RouteNames.calendar);
+              },
+            )
+          ],
         ),
         floatingActionButton: Container(
           margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -35,6 +48,7 @@ class MainScreen extends StatelessWidget {
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15.0))),
             onPressed: () {
+              BlocProvider.of<CreateTaskBloc>(context).add(CreateTaskBackToInitial());
               Navigator.pushNamed(context, RouteNames.createTask);
             },
             child: Text(
