@@ -25,7 +25,10 @@ class AppTextStyle {
   }
 
   TextStyle createTaskLabel() {
-    return const TextStyle(fontSize: 16.0, color: Colors.black38);
+    return const TextStyle(
+      fontSize: 16.0,
+      color: Colors.black38,
+    );
   }
 
   TextStyle taskNameHintStyle() {
@@ -119,6 +122,12 @@ class AppTextStyle {
       fontSize: 20.0,
       color: Colors.white70,
       fontWeight: FontWeight.normal,
+    );
+  }
+
+  TextStyle emptyStateTextsTextStyle() {
+    return const TextStyle(
+      color: Colors.black54,
     );
   }
 }

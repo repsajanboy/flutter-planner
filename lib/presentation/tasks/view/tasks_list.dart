@@ -8,6 +8,7 @@ import '../edit_task/edit.dart';
 import '../tasks.dart';
 import './widgets/tasks_list_header.dart';
 import '../../../utils/context_extension.dart';
+import 'widgets/tasks_list_empty_state.dart';
 
 class TasksList extends StatelessWidget {
   const TasksList({Key? key}) : super(key: key);
@@ -21,8 +22,8 @@ class TasksList extends StatelessWidget {
           builder: (context, state) {
             switch (state.status) {
               case TaskStatus.success:
-                if(state.filteredTasks.isEmpty) {
-                  return const Center(child: Text('No Tasks added...'),);
+                if (state.filteredTasks.isEmpty) {
+                  return const TaskListEmptyState();
                 }
                 return ListView.builder(
                   shrinkWrap: true,
@@ -44,8 +45,9 @@ class TasksList extends StatelessWidget {
 
   Widget _taskBody(BuildContext context, Task task) {
     return InkWell(
-      onTap: (){
-        BlocProvider.of<EditTaskBloc>(context).add(EditTaskDataLoaded(task: task));
+      onTap: () {
+        BlocProvider.of<EditTaskBloc>(context)
+            .add(EditTaskDataLoaded(task: task));
         Navigator.pushNamed(context, RouteNames.editTask);
       },
       child: Container(
@@ -79,7 +81,8 @@ class TasksList extends StatelessWidget {
                           borderRadius: BorderRadius.circular(3),
                         ),
                         onChanged: (bool? value) {
-                          context.read<TasksBloc>().add(TaskCompleteChanged(isComplete: value, id: task.id));
+                          context.read<TasksBloc>().add(TaskCompleteChanged(
+                              isComplete: value, id: task.id));
                         },
                       );
                     },
