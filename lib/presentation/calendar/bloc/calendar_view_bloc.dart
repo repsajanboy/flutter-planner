@@ -28,7 +28,7 @@ class CalendarViewBloc extends Bloc<CalendarViewEvent, CalendarViewState> {
     final categories = await categoryRepository.fetchCategories();
     final List<Meeting> meetings = [];
     for (var e in tasks) {
-      final categoryTheme = categories.firstWhere((a) => a.id == e.categoryId).theme;
+      final categoryTheme = categories.isNotEmpty ? categories.firstWhere((a) => a.id == e.categoryId).theme : 0;
       meetings.add(
         Meeting(
           eventName: e.title,

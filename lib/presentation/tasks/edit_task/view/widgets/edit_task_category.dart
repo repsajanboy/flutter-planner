@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../utils/color_picker_items.dart';
 import '../../../../../utils/context_extension.dart';
+import '../../../../main_screen/sidebar/sidebar.dart';
 import '../../edit.dart';
 import 'edit_task_category_picker.dart';
 
@@ -11,20 +12,25 @@ class EditTaskCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bottomCategoriesItem =
+        BlocProvider.of<SidebarBloc>(context).state.categories;
     return InkWell(
       onTap: () {
-        showModalBottomSheet<void>(
-          context: context,
-          isScrollControlled: true,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
-          ),
-          builder: (BuildContext context) => const EditTaskCategoryPicker(),
-        );
+        if (bottomCategoriesItem.isNotEmpty) {
+          showModalBottomSheet<void>(
+            context: context,
+            isScrollControlled: true,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
+            ),
+            builder: (BuildContext context) => const EditTaskCategoryPicker(),
+          );
+        }
       },
       child: BlocBuilder<EditTaskBloc, EditTaskState>(
         builder: (context, state) {
-          final _color = colorPickerItems.firstWhere((e) => e.id == state.categoryTheme);
+          final _color =
+              colorPickerItems.firstWhere((e) => e.id == state.categoryTheme);
           return Container(
             padding: const EdgeInsets.only(
                 left: 20.0, right: 10.0, top: 10.0, bottom: 10.0),
@@ -43,14 +49,18 @@ class EditTaskCategory extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(20.0)),
-                        color: _color.colors!.withOpacity(0.3),
+                        color: state.category != ''
+                            ? _color.colors!.withOpacity(0.3)
+                            : Colors.transparent,
                       ),
                       child: SizedBox(
                         width: 50.0,
                         height: 50.0,
                         child: Center(
                           child: Text(
-                            state.category.substring(0, 1),
+                            state.category != ''
+                                ? state.category.substring(0, 1)
+                                : '',
                             style: TextStyle(
                               fontFamily: 'Open Sans',
                               color: _color.colors,
@@ -63,7 +73,7 @@ class EditTaskCategory extends StatelessWidget {
                     ),
                     const SizedBox(width: 8.0),
                     Text(
-                      state.category,
+                      state.category != '' ? state.category : 'Select category',
                       style: context.typo.createTaskText(),
                     ),
                   ],

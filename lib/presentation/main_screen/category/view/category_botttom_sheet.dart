@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../utils/context_extension.dart';
 import '../../../../repositories/category_repository.dart';
+import '../../../theme/theme.dart';
 import '../bloc/category_bloc.dart';
 import 'widgets/color_picker.dart';
 
@@ -97,6 +98,7 @@ class CategoryBottomSheet extends StatelessWidget {
                             context
                                 .read<CategoryBloc>()
                                 .add(CreateCategorySaved());
+                            BlocProvider.of<ThemeBloc>(context).add(ThemeChanged(theme: AppTheme.values[state.selectedTheme]));
                             Navigator.of(context).pop();
                           },
                           child: Text(

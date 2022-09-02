@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../repositories/task_repository.dart';
 import '../../../../routing/app_router_names.dart';
 import '../../../tasks/create_task/bloc/create_task_bloc.dart';
 import '../../sidebar/sidebar.dart';
@@ -13,6 +12,8 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<TasksBloc>(context).add(TasksFetched());
+    BlocProvider.of<TasksBloc>(context).add(TasksWithNoCategoriesLoaded());
     return Scaffold(
       drawer: const SideBarDrawer(),
       appBar: AppBar(

@@ -24,3 +24,5 @@ class ShowAllListSelected extends TasksEvent {}
 class ShowActiveListSelected extends TasksEvent {}
 
 class ShowCompletedListSelected extends TasksEvent {}
+
+class TasksWithNoCategoriesLoaded extends TasksEvent {}

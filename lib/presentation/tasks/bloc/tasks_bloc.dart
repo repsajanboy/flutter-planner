@@ -18,6 +18,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     on<ShowAllListSelected>(_showAllTasksList);
     on<ShowActiveListSelected>(_showActiveTasksList);
     on<ShowCompletedListSelected>(_showCompletedTasksList);
+    on<TasksWithNoCategoriesLoaded>(_taskWithNoCategoriesLoaded);
   }
 
   final TaskRepository taskRepository;
@@ -30,12 +31,33 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     try {
       if (state.status == TaskStatus.initial) {
         final tasks = await taskRepository.fetchTasks();
-        final filteredTasks = tasks
-            .where((e) =>
-                e.categoryId ==
-                sidebarBloc
-                    .state.categories[sidebarBloc.state.selectedIndex].id)
-            .toList();
+        List<Task> filteredTasks = [];
+        if (sidebarBloc.state.categories.isNotEmpty) {
+          filteredTasks = tasks
+              .where((e) =>
+                  e.categoryId ==
+                  sidebarBloc
+                      .state.categories[sidebarBloc.state.selectedIndex].id)
+              .toList();
+        }
+        filteredTasks.sort((a, b) => a.startTime.compareTo(b.startTime));
+        emit(state.copyWith(
+          status: TaskStatus.success,
+          tasks: tasks,
+          filteredTasks: filteredTasks,
+          isCompletedEmpty: '',
+        ));
+      } else {
+        final tasks = await taskRepository.fetchTasks();
+        List<Task> filteredTasks = [];
+        if (sidebarBloc.state.categories.isNotEmpty) {
+          filteredTasks = tasks
+              .where((e) =>
+                  e.categoryId ==
+                  sidebarBloc
+                      .state.categories[sidebarBloc.state.selectedIndex].id)
+              .toList();
+        }
         filteredTasks.sort((a, b) => a.startTime.compareTo(b.startTime));
         emit(state.copyWith(
           status: TaskStatus.success,
@@ -77,11 +99,16 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     try {
       await taskRepository.completeTask(event.id!, event.isComplete!);
       final tasks = await taskRepository.fetchTasks();
-      final filteredTasks = tasks
-          .where((e) =>
-              e.categoryId ==
-              sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].id)
-          .toList();
+      List<Task> filteredTasks = [];
+      if (sidebarBloc.state.categories.isNotEmpty) {
+        filteredTasks = tasks
+            .where((e) =>
+                e.categoryId ==
+                sidebarBloc
+                    .state.categories[sidebarBloc.state.selectedIndex].id)
+            .toList();
+      }
+      filteredTasks.sort((a, b) => a.startTime.compareTo(b.startTime));
       emit(state.copyWith(
         status: TaskStatus.success,
         tasks: tasks,
@@ -150,5 +177,30 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       filteredTasks: activeTasks,
       isCompletedEmpty: activeTasks.isEmpty ? 'empty' : '',
     ));
+  }
+
+  Future<void> _taskWithNoCategoriesLoaded(
+    TasksWithNoCategoriesLoaded event,
+    Emitter<TasksState> emit,
+  ) async {
+    final tasks = await taskRepository.fetchTasks();
+    final categories = sidebarBloc.state.categories;
+
+    final List<Task> noCategories = [];
+    if (categories.isNotEmpty) {
+      for (var a in categories) {
+        for (var e in tasks) {
+          if (e.categoryId != a.id) {
+            noCategories.add(e);
+          }
+        }
+      }
+    } else {
+      for (var e in tasks) {
+        noCategories.add(e);
+      }
+    }
+
+    emit(state.copyWith(noCategortTasks: noCategories));
   }
 }
