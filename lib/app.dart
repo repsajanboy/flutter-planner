@@ -5,6 +5,7 @@ import './routing/app_router.dart';
 import './repositories/task_repository.dart';
 import 'presentation/main_screen/edit_category/edit.dart';
 import 'presentation/tasks/edit_task/edit.dart';
+import 'presentation/tasks/tasks.dart';
 import 'presentation/theme/theme.dart';
 import 'repositories/category_repository.dart';
 import './presentation/main_screen/sidebar/sidebar.dart';
@@ -52,6 +53,12 @@ class MyApp extends StatelessWidget {
               sidebarBloc: BlocProvider.of<SidebarBloc>(context),
             ),
           ),
+          BlocProvider(
+          create: (context) => TasksBloc(
+            taskRepository: context.read<TaskRepository>(),
+            sidebarBloc: BlocProvider.of<SidebarBloc>(context),
+          )..add(TasksFetched()),
+        ),
         ],
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: _buildWithTheme,
