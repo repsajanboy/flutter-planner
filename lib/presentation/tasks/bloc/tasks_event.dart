@@ -18,3 +18,9 @@ class TasksListFiltered extends TasksEvent {
 
   TasksListFiltered({required this.categoryId});
 }
+
+class ShowAllListSelected extends TasksEvent {}
+
+class ShowActiveListSelected extends TasksEvent {}
+
+class ShowCompletedListSelected extends TasksEvent {}

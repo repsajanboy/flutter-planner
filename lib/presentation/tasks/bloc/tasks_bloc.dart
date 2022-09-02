@@ -15,6 +15,9 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     on<TasksFetched>(_fetchedTask);
     on<TaskCompleteChanged>(_completeTask);
     on<TasksListFiltered>(_filteredTask);
+    on<ShowAllListSelected>(_showAllTasksList);
+    on<ShowActiveListSelected>(_showActiveTasksList);
+    on<ShowCompletedListSelected>(_showCompletedTasksList);
   }
 
   final TaskRepository taskRepository;
@@ -28,13 +31,18 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       if (state.status == TaskStatus.initial) {
         final tasks = await taskRepository.fetchTasks();
         final filteredTasks = tasks
-            .where((e) => e.categoryId == sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].id)
+            .where((e) =>
+                e.categoryId ==
+                sidebarBloc
+                    .state.categories[sidebarBloc.state.selectedIndex].id)
             .toList();
         filteredTasks.sort((a, b) => a.startTime.compareTo(b.startTime));
         emit(state.copyWith(
-            status: TaskStatus.success,
-            tasks: tasks,
-            filteredTasks: filteredTasks));
+          status: TaskStatus.success,
+          tasks: tasks,
+          filteredTasks: filteredTasks,
+          isCompletedEmpty: '',
+        ));
       }
     } on Exception catch (e) {
       print(e.toString());
@@ -55,6 +63,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
         status: TaskStatus.success,
         tasks: tasks,
         filteredTasks: filteredTasks,
+        isCompletedEmpty: '',
       ));
     } on Exception catch (e) {
       print(e.toString());
@@ -71,8 +80,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       final filteredTasks = tasks
           .where((e) =>
               e.categoryId ==
-              sidebarBloc
-                  .state.categories[sidebarBloc.state.selectedIndex].id)
+              sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].id)
           .toList();
       emit(state.copyWith(
         status: TaskStatus.success,
@@ -82,5 +90,65 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     } on Exception catch (e) {
       print(e.toString());
     }
+  }
+
+  Future<void> _showAllTasksList(
+    ShowAllListSelected event,
+    Emitter<TasksState> emit,
+  ) async {
+    final tasks = state.tasks;
+    final filteredTasks = tasks
+        .where((e) =>
+            e.categoryId ==
+            sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].id)
+        .toList();
+    filteredTasks.sort((a, b) => a.startTime.compareTo(b.startTime));
+    emit(state.copyWith(
+      status: TaskStatus.success,
+      tasks: tasks,
+      filteredTasks: filteredTasks,
+    ));
+  }
+
+  Future<void> _showActiveTasksList(
+    ShowActiveListSelected event,
+    Emitter<TasksState> emit,
+  ) async {
+    final tasks = state.tasks;
+    final filteredTasks = tasks
+        .where((e) =>
+            e.categoryId ==
+            sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].id)
+        .toList();
+
+    final activeTasks =
+        filteredTasks.where((a) => a.isComplete == false).toList();
+    activeTasks.sort((a, b) => a.startTime.compareTo(b.startTime));
+    emit(state.copyWith(
+      status: TaskStatus.success,
+      tasks: tasks,
+      filteredTasks: activeTasks,
+    ));
+  }
+
+  Future<void> _showCompletedTasksList(
+    ShowCompletedListSelected event,
+    Emitter<TasksState> emit,
+  ) async {
+    final tasks = await taskRepository.fetchTasks();
+    final filteredTasks = tasks
+        .where((e) =>
+            e.categoryId ==
+            sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].id)
+        .toList();
+    final activeTasks =
+        filteredTasks.where((a) => a.isComplete == true).toList();
+    activeTasks.sort((a, b) => a.startTime.compareTo(b.startTime));
+    emit(state.copyWith(
+      status: TaskStatus.success,
+      tasks: tasks,
+      filteredTasks: activeTasks,
+      isCompletedEmpty: activeTasks.isEmpty ? 'empty' : '',
+    ));
   }
 }
