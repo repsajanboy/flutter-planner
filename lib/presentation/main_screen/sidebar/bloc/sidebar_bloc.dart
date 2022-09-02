@@ -28,14 +28,14 @@ class SidebarBloc extends Bloc<SidebarEvent, SidebarState> {
         emit(state.copyWith(
           status: SideBarStatus.success,
           categories: categories,
-          selectedCategoryName: categories[state.selectedIndex].name,
+          selectedCategoryName: categories.isNotEmpty ? categories[state.selectedIndex].name : '',
         ));
       } else if(state.status == SideBarStatus.success){
         final categories = await categoryRepository.fetchCategories();
         emit(state.copyWith(
           status: SideBarStatus.success,
           categories: categories,
-          selectedCategoryName: categories[state.selectedIndex].name,
+          selectedCategoryName: categories.isNotEmpty ? categories[state.selectedIndex].name : '',
         ));
       }
     } on Exception catch (e) {

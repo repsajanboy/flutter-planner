@@ -85,7 +85,8 @@ class SideBarDrawer extends StatelessWidget {
                         builder: (BuildContext context) =>
                             const CategoryBottomSheet(),
                       ).whenComplete(() {
-                        BlocProvider.of<SidebarBloc>(context).add(CategoriesFetched());
+                        BlocProvider.of<SidebarBloc>(context)
+                            .add(CategoriesFetched());
                       });
                     },
                   ),
@@ -96,37 +97,84 @@ class SideBarDrawer extends StatelessWidget {
               alignment: Alignment.bottomLeft,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 15.0),
-                child: ListTile(
-                  leading: Card(
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                    elevation: 5.0,
-                    color: Colors.grey[800],
-                    child: const SizedBox(
-                      width: 50.0,
-                      height: 50.0,
-                      child: Center(
-                        child: Icon(
-                          Icons.settings_outlined,
-                          color: Colors.white70,
-                        ),
-                      ),
+                child: Column(
+                  children: [
+                    BlocBuilder<TasksBloc, TasksState>(
+                      builder: (context, state) {
+                        if (state.noCategortTasks.isEmpty) {
+                          return const SizedBox();
+                        }
+                        return ListTile(
+                          leading: const SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: Center(
+                              child: Icon(
+                                Icons.book_outlined,
+                                color: Colors.white70,
+                                size: 30.0,
+                              ),
+                            ),
+                          ),
+                          title: const Text(
+                            'No Categories',
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          trailing: Text(
+                            state.noCategortTasks.length.toString(),
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontFamily: 'Nunito',
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.pushNamed(context, RouteNames.noCategory);
+                          },
+                        );
+                      },
                     ),
-                  ),
-                  title: const Text(
-                    'Manage',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontFamily: 'Nunito',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
+                    BlocBuilder<SidebarBloc, SidebarState>(
+                      builder: (context, state) {
+                        if (state.categories.isEmpty) {
+                          return const SizedBox();
+                        }
+                        return ListTile(
+                          leading: const SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: Center(
+                              child: Icon(
+                                Icons.settings_outlined,
+                                color: Colors.white70,
+                                size: 30.0,
+                              ),
+                            ),
+                          ),
+                          title: const Text(
+                            'Manage',
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          onTap: () {
+                            BlocProvider.of<EditCategoryBloc>(context)
+                                .add(EditCategoryListLoaded());
+                            Navigator.pushNamed(
+                                context, RouteNames.editCategory);
+                          },
+                        );
+                      },
                     ),
-                  ),
-                  onTap: () {
-                    BlocProvider.of<EditCategoryBloc>(context)
-                        .add(EditCategoryListLoaded());
-                    Navigator.pushNamed(context, RouteNames.editCategory);
-                  },
+                  ],
                 ),
               ),
             ),

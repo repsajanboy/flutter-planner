@@ -13,11 +13,20 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       : super(ThemeState(themeData: appThemeData[AppTheme.blue] as ThemeData)) {
     on<ThemeChanged>((event, emit) =>
         emit(ThemeState(themeData: appThemeData[event.theme] as ThemeData)));
-    on<DefaultThemeLoaded>((event, emit) => emit(ThemeState(
-          themeData: appThemeData[AppTheme
-              .values[sidebarBloc.state.categories[sidebarBloc.state.selectedIndex].theme]] as ThemeData,
-        )));
+    on<DefaultThemeLoaded>(_defaultThemeLoaded);
   }
 
   final SidebarBloc sidebarBloc;
+
+  Future<void> _defaultThemeLoaded(
+    DefaultThemeLoaded event,
+    Emitter<ThemeState> emit,
+  ) async {
+    emit(ThemeState(
+      themeData: sidebarBloc.state.categories.isNotEmpty
+          ? appThemeData[AppTheme.values[sidebarBloc.state
+              .categories[sidebarBloc.state.selectedIndex].theme]] as ThemeData
+          : appThemeData[AppTheme.blue] as ThemeData,
+    ));
+  }
 }

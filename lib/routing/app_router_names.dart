@@ -4,5 +4,6 @@ class RouteNames {
   static const String createTask = '/createTask';
   static const String editTask = '/editTask';
   static const String editCategory = '/editCategory';
+  static const String noCategory = '/noCategory';
   static const String calendar = '/calendar';
 }

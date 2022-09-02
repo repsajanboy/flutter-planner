@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
           create: (context) => TasksBloc(
             taskRepository: context.read<TaskRepository>(),
             sidebarBloc: BlocProvider.of<SidebarBloc>(context),
-          )..add(TasksFetched()),
+          )..add(TasksFetched())..add(TasksWithNoCategoriesLoaded()),
         ),
         ],
         child: BlocBuilder<ThemeBloc, ThemeState>(
