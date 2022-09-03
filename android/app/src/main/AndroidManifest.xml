@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.repsajanboy.flutter_planner">
    <application
-        android:label="flutter_planner"
+        android:label="Plan &amp; Do"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
