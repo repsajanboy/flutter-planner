@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../data/category/post_category.dart';
 import '../../../../repositories/category_repository.dart';
@@ -25,7 +26,9 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     CreateCategorySaved event,
     Emitter<CategoryState> emit,
   ) async {
+    var id = const Uuid().v4();
     final postCategory = PostCategory(
+      id: id,
       name: state.categoryName,
       theme: state.selectedTheme,
     );
