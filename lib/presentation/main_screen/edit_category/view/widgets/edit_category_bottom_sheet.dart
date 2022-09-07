@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../utils/context_extension.dart';
 import '../../../../tasks/tasks.dart';
+import '../../../../theme/theme.dart';
 import '../../../sidebar/bloc/sidebar_bloc.dart';
 import '../../edit.dart';
 import 'edit_category_color_picker.dart';
@@ -52,10 +53,12 @@ class EditCategoryBottomSheet extends StatelessWidget {
                             .add(DeleteCategorySelected(id: state.id));
                         BlocProvider.of<SidebarBloc>(context)
                             .add(CategoriesFetched());
+                        BlocProvider.of<SidebarBloc>(context)
+                            .add(CategoriesIndexSelected(index: 0));
                         BlocProvider.of<TasksBloc>(context).add(TasksFetched());
                         BlocProvider.of<TasksBloc>(context)
                             .add(TasksWithNoCategoriesLoaded());
-                        Navigator.pop(context);
+                        Navigator.pop(context, 'Done');
                       },
                     );
                   },
@@ -118,6 +121,8 @@ class EditCategoryBottomSheet extends StatelessWidget {
                               .add(EditCategorySaved());
                           BlocProvider.of<SidebarBloc>(context)
                               .add(CategoriesFetched());
+                          BlocProvider.of<ThemeBloc>(context).add(ThemeChanged(
+                              theme: AppTheme.values[state.theme]));
                           Navigator.of(context).pop();
                         },
                         child: Text(
