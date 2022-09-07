@@ -5,12 +5,14 @@ class EditCategoryState extends Equatable {
   final String id;
   final String name;
   final int theme;
+  final bool isSuccessfullyDeleted;
 
   const EditCategoryState({
     this.categories = const <Category>[],
     this.id = '',
     this.name = '',
     this.theme = 0,
+    this.isSuccessfullyDeleted = false,
   });
 
   EditCategoryState copyWith({
@@ -18,17 +20,19 @@ class EditCategoryState extends Equatable {
     String? id,
     String? name,
     int? theme,
+    bool? isSuccessfullyDeleted,
   }) {
     return EditCategoryState(
       categories: categories ?? this.categories,
       id: id ?? this.id,
       name: name ?? this.name,
       theme: theme ?? this.theme,
+      isSuccessfullyDeleted: isSuccessfullyDeleted ?? this.isSuccessfullyDeleted
     );
   }
 
   @override
-  List<Object> get props => [categories, id, name, theme];
+  List<Object> get props => [categories, id, name, theme, isSuccessfullyDeleted];
 }
 
 class EditCategoryInitial extends EditCategoryState {}

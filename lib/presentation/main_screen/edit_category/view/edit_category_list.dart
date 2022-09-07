@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../data/category/category.dart';
 import '../../../../utils/color_picker_items.dart';
 import '../../../../utils/context_extension.dart';
+import '../../../theme/theme.dart';
 import '../edit.dart';
 import 'widgets/edit_category_bottom_sheet.dart';
 
@@ -24,37 +25,44 @@ class EditCategoryList extends StatelessWidget {
         ),
         elevation: 0.0,
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-          color: Colors.grey[850],
-        ),
-        child: Column(
-          children: [
-            Expanded(
-              child: BlocBuilder<EditCategoryBloc, EditCategoryState>(
-                builder: (context, state) {
-                  return ListView.separated(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const Divider(height: 2, color: Colors.white54),
-                    itemCount: state.categories.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return _categoriesItem(
-                        context,
-                        state.categories[index],
-                        index,
-                      );
-                    },
-                  );
-                },
-              ),
-            )
-          ],
+      body: BlocListener<EditCategoryBloc, EditCategoryState>(
+        listener: (context, state) {
+          if(state.isSuccessfullyDeleted){
+            BlocProvider.of<ThemeBloc>(context).add(ThemeChanged(theme: AppTheme.values[state.categories[0].theme]));
+          }
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            color: Colors.grey[850],
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                child: BlocBuilder<EditCategoryBloc, EditCategoryState>(
+                  builder: (context, state) {
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(height: 2, color: Colors.white54),
+                      itemCount: state.categories.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return _categoriesItem(
+                          context,
+                          state.categories[index],
+                          index,
+                        );
+                      },
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
