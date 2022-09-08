@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../repositories/task_repository.dart';
 import '../../../../data/tasks/post_task.dart';
@@ -52,6 +53,7 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
     CreateTaskSaved event,
     Emitter<CreateTaskState> emit,
   ) async {
+    var id = const Uuid().v4();
     DateTime _startTime = DateTime(
       state.taskDate.year,
       state.taskDate.month,
@@ -67,6 +69,7 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
       state.endTime.minute,
     );
     final postTask = PostTask(
+        id: id,
         title: state.title,
         taskDate: state.taskDate,
         startTime: _startTime,

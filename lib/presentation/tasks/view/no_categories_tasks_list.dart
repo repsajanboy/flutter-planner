@@ -63,6 +63,8 @@ class NoCategoriesTasksList extends StatelessWidget {
   Widget _taskBody(BuildContext context, Task task) {
     return InkWell(
       onTap: () {
+        task.category = '';
+        task.categoryId = '';
         BlocProvider.of<EditTaskBloc>(context)
             .add(EditTaskDataLoaded(task: task));
         Navigator.pushNamed(context, RouteNames.editTask);

@@ -41,8 +41,8 @@ class EditTaskBloc extends Bloc<EditTaskEvent, EditTaskState> {
         taskDate: event.task.taskDate,
         startTime: TimeOfDay.fromDateTime(event.task.startTime),
         endTime: TimeOfDay.fromDateTime(event.task.endTime),
-        category: sidebarBloc.state.categories.isNotEmpty ? sidebarBloc.state.categories.firstWhere((e) => e.id == event.task.categoryId).name : '',
-        categoryId: sidebarBloc.state.categories.isNotEmpty ? event.task.categoryId : '',
+        category: event.task.category != '' ? sidebarBloc.state.categories.isNotEmpty ? sidebarBloc.state.categories.firstWhere((e) => e.id == event.task.categoryId).name : '' : '',
+        categoryId: event.task.categoryId != '' ? sidebarBloc.state.categories.isNotEmpty ? event.task.categoryId : '' : '',
         isComplete: event.task.isComplete,
         status: EditTaskStatus.initial,
         categoryTheme:

@@ -29,7 +29,7 @@ class EditCategoryBloc extends Bloc<EditCategoryEvent, EditCategoryState> {
   ) async {
     try {
       final categories = await categoryRepository.fetchCategories();
-      emit(state.copyWith(categories: categories));
+      emit(state.copyWith(categories: categories, isSuccessfullyDeleted: false));
     } on Exception catch (e) {
       print(e.toString());
     }
@@ -51,8 +51,11 @@ class EditCategoryBloc extends Bloc<EditCategoryEvent, EditCategoryState> {
     Emitter<EditCategoryState> emit,
   ) async {
     try {
-      final updateCategory =
-          PostCategory(id: state.id, name: state.name, theme: state.theme);
+      final updateCategory = PostCategory(
+        id: state.id,
+        name: state.name,
+        theme: state.theme,
+      );
       await categoryRepository.updateCategory(updateCategory);
       final categories = await categoryRepository.fetchCategories();
       emit(state.copyWith(categories: categories));
@@ -67,6 +70,6 @@ class EditCategoryBloc extends Bloc<EditCategoryEvent, EditCategoryState> {
   ) async {
     await categoryRepository.deleteCategory(event.id!);
     final categories = await categoryRepository.fetchCategories();
-    emit(state.copyWith(categories: categories));
+    emit(state.copyWith(categories: categories, isSuccessfullyDeleted: true));
   }
 }

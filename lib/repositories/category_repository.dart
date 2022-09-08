@@ -1,37 +1,28 @@
 import '../data/category/category.dart';
 import '../data/category/post_category.dart';
-import '../networking/firebase_api.dart';
+import '../networking/database_handler.dart';
 
 class CategoryRepository {
-  final _firebaseApi = FirebaseApi();
+  //final _firebaseApi = FirebaseApi();
+  final _databaseHandler = DatabaseHandler();
 
   CategoryRepository();
 
   Future<void> postCategory(PostCategory postCategory) async {
-    await _firebaseApi.postCategory(postCategory);
+    await _databaseHandler.postCategory(postCategory);
   }
 
   Future<List<Category>> fetchCategories() async {
-    final result = await _firebaseApi.getCategories();
-    final List<Category> fetchCategories = [];
-    if (result != null) {
-      result.forEach((key, value) {
-        fetchCategories.add(Category(
-          id: key,
-          name: value['name'] as String,
-          theme: value['theme'] as int,
-        ));
-      });
-    }
+    final result = await _databaseHandler.getCategories() as List;
 
-    return fetchCategories;
+    return result.map((e) => Category.fromJson(e)).toList();
   }
 
   Future<void> updateCategory(PostCategory category) async {
-    await _firebaseApi.updateCategory(category);
+    await _databaseHandler.updateCategory(category);
   }
 
   Future<void> deleteCategory(String id) async {
-    await _firebaseApi.deleteCategory(id);
+    await _databaseHandler.deleteCategory(id);
   }
 }

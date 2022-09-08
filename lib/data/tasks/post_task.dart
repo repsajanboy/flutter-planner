@@ -27,6 +27,6 @@ class PostTask {
         "endTime": endTime!.toIso8601String(),
         "category": category,
         "categoryId": categoryId,
-        "isComplete": isComplete
+        "isComplete": isComplete! ? 1: 0
       };
 }

@@ -20,14 +20,14 @@ class Task {
   bool isComplete;
 
   factory Task.fromJson(Map<String, dynamic> json) => Task(
-        id: json["id"],
-        title: json["title"],
-        taskDate: json["taskDate"],
-        startTime: json["startTime"],
-        endTime: json["endTime"],
-        category: json['category'],
-        categoryId: json['categoryId'],
-        isComplete: json["isComplete"],
+        id: json["id"] as String,
+        title: json["title"] as String,
+        taskDate: DateTime.parse(json["taskDate"] as String),
+        startTime: DateTime.parse(json["startTime"] as String),
+        endTime: DateTime.parse(json["endTime"] as String),
+        category: json['category'] as String,
+        categoryId: json['categoryId'] as String,
+        isComplete: json["isComplete"] == 0 ? false : true,
       );
 
   Map<String, dynamic> toJson() => {

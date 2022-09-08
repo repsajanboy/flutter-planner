@@ -97,7 +97,8 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     Emitter<TasksState> emit,
   ) async {
     try {
-      await taskRepository.completeTask(event.id!, event.isComplete!);
+      final isComplete = event.isComplete! == false ? 0 : 1;
+      await taskRepository.completeTask(event.id!, isComplete);
       final tasks = await taskRepository.fetchTasks();
       List<Task> filteredTasks = [];
       if (sidebarBloc.state.categories.isNotEmpty) {
@@ -188,13 +189,11 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
     final List<Task> noCategories = [];
     if (categories.isNotEmpty) {
-      for (var a in categories) {
-        for (var e in tasks) {
-          if (e.categoryId != a.id) {
+      for (var e in tasks) {
+          if (categories.where((category) => category.id == e.categoryId).isEmpty) {
             noCategories.add(e);
           }
         }
-      }
     } else {
       for (var e in tasks) {
         noCategories.add(e);
