@@ -14,12 +14,29 @@ class SplashScreen extends StatelessWidget {
       listener: (context, state) {
         if (state.status == SideBarStatus.success) {
           BlocProvider.of<ThemeBloc>(context).add(DefaultThemeLoaded());
-          Navigator.pushReplacementNamed(context, RouteNames.main);
+          Future.delayed(const Duration(seconds: 3)).then((value) {
+            Navigator.pushReplacementNamed(context, RouteNames.main);
+          });
         }
       },
-      child: const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
+      child: Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Color(0xFF4e54c8),
+                Color(0xFF8f94fb),
+              ],
+            ),
+          ),
+          child: const Center(
+            child: Text(
+              'plan your tasks and do it',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
         ),
       ),
     );
