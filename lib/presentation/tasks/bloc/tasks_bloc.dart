@@ -189,13 +189,11 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
     final List<Task> noCategories = [];
     if (categories.isNotEmpty) {
-      for (var a in categories) {
-        for (var e in tasks) {
-          if (e.categoryId != a.id) {
+      for (var e in tasks) {
+          if (categories.where((category) => category.id == e.categoryId).isEmpty) {
             noCategories.add(e);
           }
         }
-      }
     } else {
       for (var e in tasks) {
         noCategories.add(e);

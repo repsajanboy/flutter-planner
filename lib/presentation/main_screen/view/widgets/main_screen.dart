@@ -41,6 +41,7 @@ class MainScreen extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(15.0))),
           onPressed: () {
             BlocProvider.of<CreateTaskBloc>(context).add(CreateTaskBackToInitial());
+            BlocProvider.of<CreateTaskBloc>(context).add(CreateTaskCategoryIndexLoaded());
             Navigator.pushNamed(context, RouteNames.createTask);
           },
           child: Text(
