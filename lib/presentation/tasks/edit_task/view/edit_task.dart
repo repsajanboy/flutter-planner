@@ -15,6 +15,8 @@ class EditTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -53,7 +55,9 @@ class EditTask extends StatelessWidget {
                       builder: (context, state) {
                         return TextButton(
                           onPressed: () {
-                            context.read<EditTaskBloc>().add(DeleteTaskSelected(id: state.id));
+                            context
+                                .read<EditTaskBloc>()
+                                .add(DeleteTaskSelected(id: state.id));
                             Navigator.pop(context, 'Yes');
                           },
                           child: Text(
@@ -79,35 +83,97 @@ class EditTask extends StatelessWidget {
             Navigator.pop(context);
           }
         },
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Update Task',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 20.0),
-              const EditTaskNameForm(),
-              const SizedBox(height: 20.0),
-              Container(
-                padding:
-                    const EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
-                child: Column(
-                  children: const [
-                    EditTaskDatePicker(),
-                    SizedBox(height: 20.0),
-                    EditTaskTimePicker(),
-                  ],
+        child: isPortrait
+            ? _buildPortraitLayout(context)
+            : _buildLandscapeLayout(context),
+      ),
+    );
+  }
+
+  Widget _buildPortraitLayout(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Update Task',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(height: 20.0),
+          const EditTaskNameForm(),
+          const SizedBox(height: 20.0),
+          Container(
+            padding: const EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
+            child: Column(
+              children: const [
+                EditTaskDatePicker(),
+                SizedBox(height: 20.0),
+                EditTaskTimePicker(),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20.0),
+          const EditTaskCategory(),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                padding: const EdgeInsets.all(10.0),
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.black),
+                  onPressed: () {
+                    context.read<EditTaskBloc>().add(EditTaskSaved());
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(
+                      'Update Task'.toUpperCase(),
+                      style: context.typo.createUpdateButtonStyle(),
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(height: 20.0),
-              const EditTaskCategory(),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLandscapeLayout(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Update \nTask',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(width: 10.0),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const EditTaskNameForm(),
+                  const SizedBox(height: 20.0),
+                  Container(
+                    padding: const EdgeInsets.only(
+                        top: 10.0, left: 20.0, right: 20.0),
+                    child: Column(
+                      children: const [
+                        EditTaskDatePicker(),
+                        SizedBox(height: 20.0),
+                        EditTaskTimePicker(),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  const EditTaskCategory(),
+                  const SizedBox(height: 20.0),
+                  Container(
                     padding: const EdgeInsets.all(10.0),
                     width: double.infinity,
                     child: ElevatedButton(
@@ -123,12 +189,12 @@ class EditTask extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                ),
+                  )
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -13,6 +13,8 @@ class CategoryBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     return BlocProvider(
       create: (context) => CategoryBloc(
         categoryRepository: context.read<CategoryRepository>(),
@@ -32,7 +34,9 @@ class CategoryBottomSheet extends StatelessWidget {
               topRight: Radius.circular(30.0),
             ),
           ),
-          height: MediaQuery.of(context).size.height * .48,
+          height: isPortrait
+              ? MediaQuery.of(context).size.height * .48
+              : MediaQuery.of(context).size.height * .7,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -73,7 +77,7 @@ class CategoryBottomSheet extends StatelessWidget {
                 child: ColorPicker(),
               ),
               const SizedBox(
-                height: 20.0,
+                height: 8.0,
               ),
               BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
