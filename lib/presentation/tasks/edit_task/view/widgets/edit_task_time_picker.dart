@@ -49,7 +49,7 @@ class EditTaskTimePicker extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 20.0),
+                    const SizedBox(width: 8.0),
                     Text(
                       state.startTime.format(context),
                       style: context.typo.createTaskText(),
@@ -97,7 +97,7 @@ class EditTaskTimePicker extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 20.0),
+                    const SizedBox(width: 8.0),
                     Text(
                       state.endTime.format(context),
                       style: context.typo.createTaskText(),

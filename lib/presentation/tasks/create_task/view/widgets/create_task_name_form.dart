@@ -11,6 +11,9 @@ class CreateTaskNameForm extends StatelessWidget {
     return BlocBuilder<CreateTaskBloc, CreateTaskState>(
       builder: (context, state) {
         return TextFormField(
+          keyboardType: TextInputType.multiline,
+          maxLines: null,
+          autofocus: false,
           cursorColor: Colors.black,
           style: context.typo.taskNameStyle(),
           decoration: InputDecoration(
