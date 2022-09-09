@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../utils/context_extension.dart';
 import '../../../../repositories/category_repository.dart';
+import '../../../theme/theme.dart';
+import '../../sidebar/sidebar.dart';
 import '../bloc/category_bloc.dart';
 import 'widgets/color_picker.dart';
 
@@ -94,6 +96,17 @@ class CategoryBottomSheet extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () async {
+                            final categoryBloc =
+                                BlocProvider.of<SidebarBloc>(context)
+                                    .state
+                                    .categories;
+                            if (categoryBloc.isEmpty) {
+                              BlocProvider.of<ThemeBloc>(context).add(
+                                ThemeChanged(
+                                    theme:
+                                        AppTheme.values[state.selectedTheme]),
+                              );
+                            }
                             context
                                 .read<CategoryBloc>()
                                 .add(CreateCategorySaved());

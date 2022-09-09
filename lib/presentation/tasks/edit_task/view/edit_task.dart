@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../routing/app_router_names.dart';
 import '../../../../utils/context_extension.dart';
+import '../../tasks.dart';
 import '../edit.dart';
 import 'widgets/edit_task_category.dart';
 import 'widgets/edit_task_date_picker.dart';
@@ -72,10 +73,10 @@ class EditTask extends StatelessWidget {
       body: BlocListener<EditTaskBloc, EditTaskState>(
         listener: (context, state) {
           if (state.status == EditTaskStatus.success) {
-            Navigator.pushReplacementNamed(
-              context,
-              RouteNames.main,
-            );
+            BlocProvider.of<TasksBloc>(context).add(TasksFetched());
+            BlocProvider.of<TasksBloc>(context)
+                .add(TasksWithNoCategoriesLoaded());
+            Navigator.pop(context);
           }
         },
         child: Container(

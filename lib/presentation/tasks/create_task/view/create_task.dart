@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../routing/app_router_names.dart';
 import '../../../../utils/context_extension.dart';
+import '../../tasks.dart';
 import '../create.dart';
 import 'widgets/create_task_category.dart';
 import 'widgets/create_task_date_picker.dart';
@@ -25,10 +26,10 @@ class CreateTask extends StatelessWidget {
       body: BlocListener<CreateTaskBloc, CreateTaskState>(
         listener: (context, state) {
           if (state.status == CreateTaskStatus.success) {
-            Navigator.pushReplacementNamed(
-              context,
-              RouteNames.main,
-            );
+            BlocProvider.of<TasksBloc>(context).add(TasksFetched());
+            BlocProvider.of<TasksBloc>(context)
+                .add(TasksWithNoCategoriesLoaded());
+            Navigator.pop(context);
           }
         },
         child: Container(
