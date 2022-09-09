@@ -1,16 +1,10 @@
-# flutter_planner
+# Plan & Do Mobile App
 
-A new Flutter project.
+A simple to do list app with calendar and categories feature made using Flutter with flutter_bloc as state management and sqflite for local storage (Firebase database as online storage).
 
-## Getting Started
+## Screenshots
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![My Image](./assets/images/4pics1.png)
+![My Image](./assets/images/4pics2.png)
+![My Image](./assets/images/4pics3.png)
+![My Image](./assets/images/4pics4.png)
