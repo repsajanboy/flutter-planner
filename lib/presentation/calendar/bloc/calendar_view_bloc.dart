@@ -28,13 +28,20 @@ class CalendarViewBloc extends Bloc<CalendarViewEvent, CalendarViewState> {
     final categories = await categoryRepository.fetchCategories();
     final List<Meeting> meetings = [];
     for (var e in tasks) {
-      final categoryTheme = categories.isNotEmpty ? categories.firstWhere((a) => a.id == e.categoryId).theme : 0;
+      final categoryTheme = categories.isNotEmpty
+          ? categories
+                  .where((category) => category.id == e.categoryId)
+                  .isNotEmpty
+              ? categories.firstWhere((a) => a.id == e.categoryId).theme
+              : 0
+          : 0;
       meetings.add(
         Meeting(
           eventName: e.title,
           startTime: e.startTime,
           endTime: e.endTime,
-          theme:  colorPickerItems.firstWhere((b) => b.id == categoryTheme).colors!,
+          theme:
+              colorPickerItems.firstWhere((b) => b.id == categoryTheme).colors!,
         ),
       );
     }

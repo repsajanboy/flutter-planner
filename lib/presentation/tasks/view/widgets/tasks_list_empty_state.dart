@@ -13,11 +13,13 @@ class TaskListEmptyState extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: BlocBuilder<TasksBloc, TasksState>(
         builder: (context, state) {
+          final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width * .5,
+                width: isPortrait ? MediaQuery.of(context).size.width * .5 : MediaQuery.of(context).size.width * .18,
                 child: Image.asset(
                   'assets/images/no-task.png',
                   fit: BoxFit.fill,

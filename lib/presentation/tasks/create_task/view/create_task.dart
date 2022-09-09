@@ -15,6 +15,8 @@ class CreateTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -32,37 +34,102 @@ class CreateTask extends StatelessWidget {
             Navigator.pop(context);
           }
         },
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Create \nNew Task',
-                style: Theme.of(context).textTheme.titleLarge,
+        child: isPortrait
+            ? _buildPortraitLayout(context)
+            : _buildLandscapeLayout(context),
+      ),
+    );
+  }
+
+  Widget _buildPortraitLayout(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Create \nNew Task',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          const CreateTaskNameForm(),
+          const SizedBox(height: 20.0),
+          Container(
+            padding: const EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
+            child: Column(
+              children: const [
+                CreateTaskDatePicker(),
+                SizedBox(height: 20.0),
+                CreateTaskTimePicker(),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20.0),
+          const CreateTaskCategory(),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                padding: const EdgeInsets.all(10.0),
+                width: double.infinity,
+                child: BlocBuilder<CreateTaskBloc, CreateTaskState>(
+                    builder: (context, state) {
+                  return ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.black),
+                    onPressed: () {
+                      context.read<CreateTaskBloc>().add(CreateTaskSaved());
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text(
+                        'Create Task'.toUpperCase(),
+                        style: context.typo.createUpdateButtonStyle(),
+                      ),
+                    ),
+                  );
+                }),
               ),
-              const SizedBox(
-                height: 20.0,
-              ),
-              const CreateTaskNameForm(),
-              const SizedBox(height: 20.0),
-              Container(
-                padding:
-                    const EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
-                child: Column(
-                  children: const [
-                    CreateTaskDatePicker(),
-                    SizedBox(height: 20.0),
-                    CreateTaskTimePicker(),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              const CreateTaskCategory(),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLandscapeLayout(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Create \nNew Task',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(width: 10.0),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const CreateTaskNameForm(),
+                  const SizedBox(height: 20.0),
+                  Container(
+                    padding: const EdgeInsets.only(
+                        top: 10.0, left: 20.0, right: 20.0),
+                    child: Column(
+                      children: const [
+                        CreateTaskDatePicker(),
+                        SizedBox(height: 20.0),
+                        CreateTaskTimePicker(),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  const CreateTaskCategory(),
+                  const SizedBox(height: 20.0),
+                  Container(
                     padding: const EdgeInsets.all(10.0),
                     width: double.infinity,
                     child: BlocBuilder<CreateTaskBloc, CreateTaskState>(
@@ -81,12 +148,12 @@ class CreateTask extends StatelessWidget {
                         ),
                       );
                     }),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

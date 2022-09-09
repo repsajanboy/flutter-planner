@@ -13,6 +13,8 @@ class EditCategoryBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
       child: Container(
@@ -28,7 +30,9 @@ class EditCategoryBottomSheet extends StatelessWidget {
             topRight: Radius.circular(30.0),
           ),
         ),
-        height: MediaQuery.of(context).size.height * .48,
+        height: isPortrait
+            ? MediaQuery.of(context).size.height * .48
+            : MediaQuery.of(context).size.height * .71,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -10,6 +10,8 @@ class CalendarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
@@ -44,15 +46,16 @@ class CalendarScreen extends StatelessWidget {
                       CalendarView.workWeek,
                       CalendarView.month,
                     ],
-                    monthViewSettings: const MonthViewSettings(
+                    monthViewSettings: MonthViewSettings(
                       dayFormat: 'EEE',
                       navigationDirection: MonthNavigationDirection.horizontal,
+                      numberOfWeeksInView: isPortrait ? 6 : 3,
                       showAgenda: true,
                       agendaItemHeight: 70,
                     ),
-                    timeSlotViewSettings: const TimeSlotViewSettings(
+                    timeSlotViewSettings: TimeSlotViewSettings(
                       dayFormat: 'EEE',
-                      timeIntervalHeight: 75,
+                      timeIntervalHeight: isPortrait ? 75 : 55,
                     ),
                   );
                 },

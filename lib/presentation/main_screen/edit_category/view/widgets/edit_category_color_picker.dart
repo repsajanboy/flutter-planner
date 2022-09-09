@@ -9,14 +9,16 @@ class EditCategoryColorPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     return Container(
       padding: const EdgeInsets.all(20.0),
       width: double.infinity,
       child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
-          crossAxisSpacing: 8.0,
-          mainAxisSpacing: 8.0,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: isPortrait ? 4 : 8,
+          crossAxisSpacing: isPortrait ? 8.0 : 20.0,
+          mainAxisSpacing: isPortrait ? 8.0 : 1.0,
         ),
         itemCount: colorPickerItems.length,
         itemBuilder: (context, index) {
