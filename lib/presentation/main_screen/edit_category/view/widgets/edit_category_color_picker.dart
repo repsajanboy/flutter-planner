@@ -20,6 +20,7 @@ class EditCategoryColorPicker extends StatelessWidget {
           crossAxisSpacing: isPortrait ? 8.0 : 20.0,
           mainAxisSpacing: isPortrait ? 8.0 : 1.0,
         ),
+        shrinkWrap: true,
         itemCount: colorPickerItems.length,
         itemBuilder: (context, index) {
           return BlocBuilder<EditCategoryBloc, EditCategoryState>(

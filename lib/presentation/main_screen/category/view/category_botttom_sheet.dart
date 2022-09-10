@@ -13,8 +13,6 @@ class CategoryBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
     return BlocProvider(
       create: (context) => CategoryBloc(
         categoryRepository: context.read<CategoryRepository>(),
@@ -34,99 +32,98 @@ class CategoryBottomSheet extends StatelessWidget {
               topRight: Radius.circular(30.0),
             ),
           ),
-          height: isPortrait
-              ? MediaQuery.of(context).size.height * .48
-              : MediaQuery.of(context).size.height * .7,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'New category',
-                style: context.typo.createUpdateCategoryLabelStyle(),
-              ),
-              const SizedBox(
-                height: 5.0,
-              ),
-              BlocBuilder<CategoryBloc, CategoryState>(
-                builder: (context, state) {
-                  return TextFormField(
-                    cursorColor: Colors.white70,
-                    style: context.typo.categoryNameTextStyle(),
-                    decoration: InputDecoration(
-                      hintText: 'Category Name',
-                      hintStyle: context.typo.categoryNameHintStyle(),
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white70),
+          child: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'New category',
+                  style: context.typo.createUpdateCategoryLabelStyle(),
+                ),
+                const SizedBox(
+                  height: 5.0,
+                ),
+                BlocBuilder<CategoryBloc, CategoryState>(
+                  builder: (context, state) {
+                    return TextFormField(
+                      cursorColor: Colors.white70,
+                      style: context.typo.categoryNameTextStyle(),
+                      decoration: InputDecoration(
+                        hintText: 'Category Name',
+                        hintStyle: context.typo.categoryNameHintStyle(),
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white70),
+                        ),
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white70),
+                        ),
                       ),
-                      enabledBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white70),
+                      onChanged: (value) {
+                        context
+                            .read<CategoryBloc>()
+                            .add(CategoryNameChanged(categoryName: value));
+                      },
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 12.0,
+                ),
+                const ColorPicker(),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                BlocBuilder<CategoryBloc, CategoryState>(
+                  builder: (context, state) {
+                    return IntrinsicHeight(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context, 'Cancel');
+                            },
+                            child: Text(
+                              'Cancel'.toUpperCase(),
+                              style: context.typo.popUpButtonStyle(),
+                            ),
+                          ),
+                          const VerticalDivider(
+                            color: Colors.white24,
+                            thickness: 1.5,
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              final categoryBloc =
+                                  BlocProvider.of<SidebarBloc>(context)
+                                      .state
+                                      .categories;
+                              if (categoryBloc.isEmpty) {
+                                BlocProvider.of<ThemeBloc>(context).add(
+                                  ThemeChanged(
+                                      theme:
+                                          AppTheme.values[state.selectedTheme]),
+                                );
+                              }
+                              context
+                                  .read<CategoryBloc>()
+                                  .add(CreateCategorySaved());
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              'Save'.toUpperCase(),
+                              style: context.typo.popUpButtonStyle(),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    onChanged: (value) {
-                      context
-                          .read<CategoryBloc>()
-                          .add(CategoryNameChanged(categoryName: value));
-                    },
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 12.0,
-              ),
-              const Expanded(
-                child: ColorPicker(),
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              BlocBuilder<CategoryBloc, CategoryState>(
-                builder: (context, state) {
-                  return IntrinsicHeight(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context, 'Cancel');
-                          },
-                          child: Text(
-                            'Cancel'.toUpperCase(),
-                            style: context.typo.popUpButtonStyle(),
-                          ),
-                        ),
-                        const VerticalDivider(
-                          color: Colors.white24,
-                          thickness: 1.5,
-                        ),
-                        TextButton(
-                          onPressed: () async {
-                            final categoryBloc =
-                                BlocProvider.of<SidebarBloc>(context)
-                                    .state
-                                    .categories;
-                            if (categoryBloc.isEmpty) {
-                              BlocProvider.of<ThemeBloc>(context).add(
-                                ThemeChanged(
-                                    theme:
-                                        AppTheme.values[state.selectedTheme]),
-                              );
-                            }
-                            context
-                                .read<CategoryBloc>()
-                                .add(CreateCategorySaved());
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            'Save'.toUpperCase(),
-                            style: context.typo.popUpButtonStyle(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
